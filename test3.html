@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+   <head>
+      <meta charset="UTF-8">  
+	   <title>菜鸟教程(runoob.com)</title> 
+      <script type="text/javascript">
+      
+         var db = openDatabase('mydb', '1.0', 'Test DB', 2 * 1024 * 1024);
+         var msg;
+         
+         db.transaction(function (tx) {
+            tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS1 (id unique, log)');
+            tx.executeSql('INSERT INTO LOGS1 (id, log) VALUES ("UA", "United Air Lines Inc.")');
+            tx.executeSql('INSERT INTO LOGS1 (id, log) VALUES ("AA", "American Airlines Inc.")');
+            tx.executeSql('INSERT INTO LOGS1 (id, log) VALUES ("US", "US Airways Inc.")');
+            tx.executeSql('INSERT INTO LOGS1 (id, log) VALUES ("F9", "Frontier Airlines Inc.")');
+            tx.executeSql('INSERT INTO LOGS1 (id, log) VALUES ("B6", "JetBlue Airways")');
+            tx.executeSql('INSERT INTO LOGS1 (id, log) VALUES ("OO", "Skywest Airlines Inc.")');
+            tx.executeSql('INSERT INTO LOGS1 (id, log) VALUES ("AS", "Alaska Airlines Inc.")');
+            msg = '<p></p>';
+            document.querySelector('#status').innerHTML =  msg;
+         });
+
+         db.transaction(function (tx) {
+            tx.executeSql('SELECT * FROM LOGS1', [], function (tx, results) {
+               var len = results.rows.length, i;
+               msg = "<p>Data record: " + len + "</p>";
+               document.querySelector('#status').innerHTML +=  msg;
+               
+               msg = "<p><b>" + "IATA_CODE" + " | " + "AIRLINES" + "</b></p>";
+               document.querySelector('#status').innerHTML += msg;
+               for (i = 0; i < len; i++){
+                  msg = "<p><b>" + results.rows.item(i).id +  "&emsp; &emsp;&emsp; | &emsp;" + results.rows.item(i).log + "</b></p>";
+                  document.querySelector('#status').innerHTML +=  msg;
+               }
+            }, null);
+         });
+         
+      </script>
+      
+   </head>
+   
+   <body>
+      <div id="status" name="status">状态信息</div>
+   </body>
+   
+</html>
