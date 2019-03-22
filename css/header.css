@@ -1,0 +1,40 @@
+/**
+ * this is the header file style sheet.
+ * should be included in every single page that require a top nav bar
+ */
+
+/**
+ * reset some property that might cause display error cross browsers
+ */
+body,html,div{
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+/**
+ * the container for top nav bar
+ *
+ */
+#navContainer{
+    font-size: 0px;
+    height: 80px;
+    width: 100%;
+    background: rgb(18, 18, 18);;
+}
+
+#logo_img{
+    margin-left: 10%;
+    height: 80px;
+    display: inline-block;
+}
+
+#logo_div{
+    color: #dfe4eb;
+    line-height: 80px;
+    font-size: 50px;
+    display: inline-block;
+    height: 80px;
+    margin-left: 1%;
+    vertical-align: top;
+}
