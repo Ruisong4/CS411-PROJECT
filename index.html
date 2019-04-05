@@ -39,25 +39,44 @@
                     <div id="byRoute">By Route</div>
                     <div id="byFlight">By Flight</div>
                 </div>
-                <div id="searchInputs" class="routeBlock">
+                <div class="searchInputs routeBlock">
                     <div class="inputBlock">
                         <div class="searchInputPlaceHolder">FROM</div>
-                        <input type="text" id="depInput" placeholder="where you departure">
+                        <input type="text" id="depInput" class="searchInput" placeholder="where you departure">
                     </div>
                     <div class="inputBlock">
                         <div class="searchInputPlaceHolder">TO</div>
-                        <input type="text" id="desInput" placeholder="your destination">
+                        <input type="text" id="desInput" class="searchInput" placeholder="your destination">
                     </div>
                     <div class="inputBlock">
                         <div class="searchInputPlaceHolder">DEPARTURE DATE</div>
-                        <input type="text" id="depDateInput" placeholder="Your Departure Date">
+                        <input type="text" id="depDateInput" class="searchInput" placeholder="Your Departure Date">
                     </div>
                     <div class="inputBlock">
                         <div class="searchInputPlaceHolder">RETURN DATE</div>
-                        <input type="text" id="desDateInput" placeholder="Your Return Date">
+                        <input type="text" id="desDateInput" class="searchInput" placeholder="Your Return Date">
                     </div>
                     <div class="inputBlock">
-                        <div id="routeSubmit">
+                        <div id="routeSubmit" class="searchSubmit">
+                            Check My Flight
+                        </div>
+                    </div>
+                </div>
+                <div class="searchInputs flightBlock">
+                    <div class="inputBlock">
+                        <div class="searchInputPlaceHolder">Airline</div>
+                        <input type="text" id="airlineInput" class="searchInput" placeholder="airline">
+                    </div>
+                    <div class="inputBlock">
+                        <div class="searchInputPlaceHolder">Flight Number</div>
+                        <input type="text" id="flightNumberInput" class="searchInput" placeholder="Flight Number">
+                    </div>
+                    <div class="inputBlock">
+                        <div class="searchInputPlaceHolder">DEPARTURE DATE</div>
+                        <input type="text" id="flightNumberDate" class="searchInput" placeholder="Your Date">
+                    </div>
+                    <div class="inputBlock" style="width: 100%">
+                        <div id="flightNumberSubmit" class="searchSubmit">
                             Check My Flight
                         </div>
                     </div>
