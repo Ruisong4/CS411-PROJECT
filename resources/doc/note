@@ -1,0 +1,14 @@
+由url传递的参数
+searchId: string
+使用searchId向数据库发起查询
+tableName: searchRecord
+table structure:
+    searchId: string (key)
+    type: string ("route" means search by airport + date. "flight" means by flight number)
+    airline: string (the airline code all uppercase, empty when type == route for default)
+    flightNumber: string (flightNumber, empty when type == route for default)
+    destination: string (destination airport Code, empty when type == flight for default)
+    departure: string (destination airport Code, empty when type == flight for default)
+    departureDate: date (departureDate)
+    roundTrip: bool (if it is round Trip)
+    returnDate: date (return Date)
