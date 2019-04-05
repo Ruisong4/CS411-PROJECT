@@ -5,7 +5,17 @@
     <title>Fly on Time</title>
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/mainPage.css">
+    <link rel="stylesheet" href="css/jquery.auto-complete.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script
+            src="https://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+            crossorigin="anonymous">
+    </script> <!-- loading jquery lib -->
+    <script src="javascript/jquery.auto-complete.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="javascript/header.js"></script>
+    <script src="javascript/mainPage.js"></script>
 </head>
 <body>
     <!-- top nav start here -->
@@ -30,7 +40,27 @@
                     <div id="byFlight">By Flight</div>
                 </div>
                 <div id="searchInputs" class="routeBlock">
-
+                    <div class="inputBlock">
+                        <div class="searchInputPlaceHolder">FROM</div>
+                        <input type="text" id="depInput" placeholder="where you departure">
+                    </div>
+                    <div class="inputBlock">
+                        <div class="searchInputPlaceHolder">TO</div>
+                        <input type="text" id="desInput" placeholder="your destination">
+                    </div>
+                    <div class="inputBlock">
+                        <div class="searchInputPlaceHolder">DEPARTURE DATE</div>
+                        <input type="text" id="depDateInput" placeholder="Your Departure Date">
+                    </div>
+                    <div class="inputBlock">
+                        <div class="searchInputPlaceHolder">RETURN DATE</div>
+                        <input type="text" id="desDateInput" placeholder="Your Return Date">
+                    </div>
+                    <div class="inputBlock">
+                        <div id="routeSubmit">
+                            Check My Flight
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
