@@ -13,103 +13,104 @@
             crossorigin="anonymous">
     </script> <!-- loading jquery lib -->
     <script src="javascript/jquery.auto-complete.min.js"></script>
+    <script src="javascript/cookieTool.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="javascript/header.js"></script>
     <script src="javascript/mainPage.js"></script>
 </head>
 <body>
-    <!-- top nav start here -->
-    <div id="navContainer">
-        <img id="logo_img" src="resources/img/plane.png">
-        <div id="logo_div">ON TIME</div>
-        <div id="navLinks">
-            <a href="javascript:void(0)" class="navLink">Search</a>
-            <a class="navLink">News</a>
-            <a class="navLink">Chat</a>
-            <a id="showLogin" class="navLink">MY TRIP</a>
-        </div>
+<!-- top nav start here -->
+<div id="navContainer">
+    <img id="logo_img" src="resources/img/plane.png">
+    <div id="logo_div">ON TIME</div>
+    <div id="navLinks">
+        <a href="javascript:void(0)" class="navLink">Search</a>
+        <a class="navLink">News</a>
+        <a class="navLink">Chat</a>
+        <a id="showLogin" class="navLink">MY TRIP</a>
     </div>
-    <!-- top nav ends here -->
-    <div id="mainContainer">
-        <img src="resources/img/main_background.jpg" id="mainBack">
-        <div id="searchContainer">
-            <div id="searchBoardTitle">SEARCH YOUR PLAN</div>
-            <div id="searchBoard">
-                <div id="searchType">
-                    <div id="byRoute">By Route</div>
-                    <div id="byFlight">By Flight</div>
+</div>
+<!-- top nav ends here -->
+<div id="mainContainer">
+    <img src="resources/img/main_background.jpg" id="mainBack">
+    <div id="searchContainer">
+        <div id="searchBoardTitle">SEARCH YOUR PLAN</div>
+        <div id="searchBoard">
+            <div id="searchType">
+                <div id="byRoute">By Route</div>
+                <div id="byFlight">By Flight</div>
+            </div>
+            <div class="searchInputs routeBlock">
+                <div class="inputBlock">
+                    <div class="searchInputPlaceHolder">FROM</div>
+                    <input type="text" id="depInput" class="searchInput" placeholder="where you departure">
                 </div>
-                <div class="searchInputs routeBlock">
-                    <div class="inputBlock">
-                        <div class="searchInputPlaceHolder">FROM</div>
-                        <input type="text" id="depInput" class="searchInput" placeholder="where you departure">
-                    </div>
-                    <div class="inputBlock">
-                        <div class="searchInputPlaceHolder">TO</div>
-                        <input type="text" id="desInput" class="searchInput" placeholder="your destination">
-                    </div>
-                    <div class="inputBlock">
-                        <div class="searchInputPlaceHolder">DEPARTURE DATE</div>
-                        <input type="text" id="depDateInput" class="searchInput" placeholder="Your Departure Date">
-                    </div>
-                    <div class="inputBlock">
-                        <div class="searchInputPlaceHolder">RETURN DATE</div>
-                        <input type="text" id="desDateInput" class="searchInput" placeholder="Your Return Date">
-                    </div>
-                    <div class="inputBlock">
-                        <div id="routeSubmit" class="searchSubmit">
-                            Check My Flight
-                        </div>
+                <div class="inputBlock">
+                    <div class="searchInputPlaceHolder">TO</div>
+                    <input type="text" id="desInput" class="searchInput" placeholder="your destination">
+                </div>
+                <div class="inputBlock">
+                    <div class="searchInputPlaceHolder">DEPARTURE DATE</div>
+                    <input type="text" id="depDateInput" class="searchInput" placeholder="Your Departure Date">
+                </div>
+                <div class="inputBlock">
+                    <div class="searchInputPlaceHolder">RETURN DATE</div>
+                    <input type="text" id="desDateInput" class="searchInput" placeholder="Your Return Date">
+                </div>
+                <div class="inputBlock">
+                    <div id="routeSubmit" class="searchSubmit">
+                        Check My Flight
                     </div>
                 </div>
-                <div class="searchInputs flightBlock">
-                    <div class="inputBlock">
-                        <div class="searchInputPlaceHolder">Airline</div>
-                        <input type="text" id="airlineInput" class="searchInput" placeholder="airline">
-                    </div>
-                    <div class="inputBlock">
-                        <div class="searchInputPlaceHolder">Flight Number</div>
-                        <input type="text" id="flightNumberInput" class="searchInput" placeholder="Flight Number">
-                    </div>
-                    <div class="inputBlock">
-                        <div class="searchInputPlaceHolder">DEPARTURE DATE</div>
-                        <input type="text" id="flightNumberDate" class="searchInput" placeholder="Your Date">
-                    </div>
-                    <div class="inputBlock" style="width: 100%">
-                        <div id="flightNumberSubmit" class="searchSubmit">
-                            Check My Flight
-                        </div>
+            </div>
+            <div class="searchInputs flightBlock">
+                <div class="inputBlock">
+                    <div class="searchInputPlaceHolder">Airline</div>
+                    <input type="text" id="airlineInput" class="searchInput" placeholder="airline">
+                </div>
+                <div class="inputBlock">
+                    <div class="searchInputPlaceHolder">Flight Number</div>
+                    <input type="text" id="flightNumberInput" class="searchInput" placeholder="Flight Number">
+                </div>
+                <div class="inputBlock">
+                    <div class="searchInputPlaceHolder">DEPARTURE DATE</div>
+                    <input type="text" id="flightNumberDate" class="searchInput" placeholder="Your Date">
+                </div>
+                <div class="inputBlock" style="width: 100%">
+                    <div id="flightNumberSubmit" class="searchSubmit">
+                        Check My Flight
                     </div>
                 </div>
             </div>
         </div>
-        <div id="newsContainer">
+    </div>
+    <div id="newsContainer">
 
-        </div>
-        <div id="footer">
+    </div>
+    <div id="footer">
 
+    </div>
+</div>
+<!-- the login window starts here -->
+<div id="globalLayer">
+    <div id="loginContainer">
+        <div id="closeLogin">X</div>
+        <div class="textHint">Email Address</div>
+        <input id="username" type="text">
+        <div id="usernameHint" class="errorHint"></div>
+        <div class="textHint">password</div>
+        <input id="password" type="password">
+        <div id="passwordHint" class="errorHint"></div>
+        <div style="display: none" class="textHint hideForm">Confirm password</div>
+        <input  id="confirm_password" style="display: none" type="password" class="hideForm">
+        <div id="confirmHint" style="display: none" class="errorHint hideForm"></div>
+        <div id="login_button">Sign in</div>
+        <div id="changeMode">
+            <div id="changeInfo">need an account?</div>
+            <div id="changeButton">sign up</div>
         </div>
     </div>
-    <!-- the login window starts here -->
-    <div id="globalLayer">
-        <div id="loginContainer">
-            <div id="closeLogin">X</div>
-            <div class="textHint">Email Address</div>
-            <input type="text">
-            <div class="errorHint"></div>
-            <div class="textHint">password</div>
-            <input type="password">
-            <div class="errorHint"></div>
-            <div style="display: none" class="textHint hideForm">Confirm password</div>
-            <input style="display: none" type="password" class="hideForm">
-            <div style="display: none" class="errorHint hideForm"></div>
-            <div id="login_button">Sign in</div>
-            <div id="changeMode">
-                <div id="changeInfo">need an account?</div>
-                <div id="changeButton">sign up</div>
-            </div>
-        </div>
-    </div>
-    <!-- the login window ends here -->
+</div>
+<!-- the login window ends here -->
 </body>
 </html>
