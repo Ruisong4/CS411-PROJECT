@@ -1,0 +1,77 @@
+#query_port{
+    border-right: 1px solid black;
+    height: 35px;
+    width: 140px;
+    text-align: center;
+    line-height: 35px;
+    font-family: Staatliches;
+    font-size: 20px;
+    color: #dfe4eb;
+    background: #eba718;
+    float: left;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    cursor: default;
+}
+
+
+#insert_port{
+    border-left: 1px solid black;
+    height: 35px;
+    width: 140px;
+    text-align: center;
+    line-height: 35px;
+    font-family: Staatliches;
+    font-size: 20px;
+    color: #000;
+    background: #dfe4eb;
+    float: left;
+    cursor: pointer;
+}
+#update_port{
+    border-left: 1px solid black;
+    height: 35px;
+    width: 140px;
+    text-align: center;
+    line-height: 35px;
+    font-family: Staatliches;
+    font-size: 20px;
+    color: #000;
+    background: #dfe4eb;
+    float: left;
+    cursor: pointer;
+}
+
+
+#delete_port{
+    border-left: 1px solid black;
+    height: 35px;
+    width: 140px;
+    text-align: center;
+    line-height: 35px;
+    font-family: Staatliches;
+    font-size: 20px;
+    color: #000;
+    background: #dfe4eb;
+    float: left;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    cursor: pointer;
+}
+
+.query_block{
+    
+}
+
+.insert_block{
+    display: none;
+}
+
+.update_block{
+    display: none;
+}
+
+.delete_block{
+    display: none;
+}
+    

@@ -24,6 +24,7 @@
     <img id="logo_img" src="resources/img/plane.png">
     <div id="logo_div">ON TIME</div>
     <div id="navLinks">
+        <a href="manage_airport.html" class="navLink">Mamage Airport</a>
         <a href="javascript:void(0)" class="navLink">Search</a>
         <a class="navLink">News</a>
         <a class="navLink">Chat</a>
@@ -40,29 +41,31 @@
                 <div id="byRoute">By Route</div>
                 <div id="byFlight">By Flight</div>
             </div>
-            <div class="searchInputs routeBlock">
-                <div class="inputBlock">
-                    <div class="searchInputPlaceHolder">FROM</div>
-                    <input type="text" id="depInput" class="searchInput" placeholder="where you departure">
-                </div>
-                <div class="inputBlock">
-                    <div class="searchInputPlaceHolder">TO</div>
-                    <input type="text" id="desInput" class="searchInput" placeholder="your destination">
-                </div>
-                <div class="inputBlock">
-                    <div class="searchInputPlaceHolder">DEPARTURE DATE</div>
-                    <input type="text" id="depDateInput" class="searchInput" placeholder="Your Departure Date">
-                </div>
-                <div class="inputBlock">
-                    <div class="searchInputPlaceHolder">RETURN DATE</div>
-                    <input type="text" id="desDateInput" class="searchInput" placeholder="Your Return Date">
-                </div>
-                <div class="inputBlock">
-                    <div id="routeSubmit" class="searchSubmit">
-                        Check My Flight
+            <form action="php/basic_query.php" method = "post">
+                <div class="searchInputs routeBlock">
+                    <div class="inputBlock">
+                        <div class="searchInputPlaceHolder">FROM</div>
+                        <input type="text" name = "depInput" id="depInput" class="searchInput" placeholder="where you departure">
+                    </div>
+                    <div class="inputBlock">
+                        <div class="searchInputPlaceHolder">TO</div>
+                        <input type="text" name = "desInput" id="desInput" class="searchInput" placeholder="your destination">
+                    </div>
+                    <div class="inputBlock">
+                        <div class="searchInputPlaceHolder">DEPARTURE DATE</div>
+                        <input type="text" id="depDateInput" class="searchInput" placeholder="Your Departure Date">
+                    </div>
+                    <div class="inputBlock">
+                        <div class="searchInputPlaceHolder">RETURN DATE</div>
+                        <input type="text" id="desDateInput" class="searchInput" placeholder="Your Return Date">
+                    </div>
+                    <div class="inputBlock">
+                        <div class="inputBlock">
+                            <input type="Submit" value = "check my flight" name = "routeSubmit"  class="searchSubmit" />
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
             <div class="searchInputs flightBlock">
                 <div class="inputBlock">
                     <div class="searchInputPlaceHolder">Airline</div>
