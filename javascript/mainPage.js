@@ -145,9 +145,130 @@ $('document').ready(function () {
             });
         }
     })
+    
+    $('#routeSubmit').click(function () {
+
+        let departure = $('#depInput').val();
+        let destination = $('#desInput').val();
+
+        if (departure == "" || destination == ""){
+            alert("destination and departure airport can not be null");
+            return; //TODO: 好看一点
+        }
+
+        let deStr = departure.match(/\([A-Z][A-Z][A-Z]\)/)[0].substring(1,4);
+        let desStr = destination.match(/\([A-Z][A-Z][A-Z]\)/)[0].substring(1,4);
+
+        if (desStr == deStr){
+            alert("destination and departure airport should be different");
+            return; //TODO: 好看一点
+        }
+
+        let deDate = departureDate.selectedDates == "" ? "" : new Date(departureDate.selectedDates);
+        let reDate = returnDate.selectedDates == "" ? "" : new Date(returnDate.selectedDates);
+
+
+        if(deDate == ""){
+            alert("please select a departure date");
+            return;
+        }
+
+        if (reDate!=""&&deDate!=""&&deDate > reDate){
+            alert("departure date should be earlier than arrival date");
+            return;
+        }
+
+        deDate = deDate=="" ? "" : deDate.getFullYear() + "-" + deDate.getMonth() + "-" + deDate.getDay();
+        reDate = reDate=="" ? "" : reDate.getFullYear() + "-" + reDate.getMonth() + "-" + reDate.getDay();
+        let searchId = generateId(15);
+        let roundTrip = reDate == "" ? 0 : 1;
+        reDate = reDate == ""? "1111-11-11" : reDate;
+        $.ajax({
+            type: "POST",
+            url: "./php/searchRecord.php",
+            data: {
+                "searchId":searchId,
+                "type":"route",
+                "airline":"",
+                "flightNumber":"",
+                "destination":desStr,
+                "departure":deStr,
+                "departureDate":deDate,
+                "returnDate":reDate,
+                "roundTrip":roundTrip
+            },
+            cache: false,
+            async: false,
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+                //window.location.href = "query.html?searchId = " + searchId;
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+            }
+        });
+    })
+
+    $('#flightNumberSubmit').click(function () {
+
+        let airline = $('#airlineInput').val();
+        let flightNumber = $('#flightNumberInput').val();
+
+        if (airline == "" || flightNumber == ""){
+            alert("flightNumber and airline can not be null");
+            return; //TODO: 好看一点
+        }
+
+        let airlineStr = airline.match(/, [A-Z][A-Z]/)[0].substring(2);
+        let searchId = generateId(15);
+
+        let deDate = new Date(numberDate.selectedDates);
+
+        if(deDate == ""){
+            alert("please select a departure date");
+            return;
+        }
+        deDate = deDate.getFullYear() + "-" + deDate.getMonth() + "-" + deDate.getDay();
+        $.ajax({
+            type: "POST",
+            url: "./php/searchRecord.php",
+            data: {
+                "searchId":searchId,
+                "type":"flight",
+                "airline":airlineStr,
+                "flightNumber":flightNumber,
+                "destination":"",
+                "departure":"",
+                "departureDate":deDate,
+                "returnDate":"1111-11-11",
+                "roundTrip":0
+            },
+            cache: false,
+            async: false,
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+                //window.location.href = "query.html?searchId = " + searchId;
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+            }
+        });
+    })
 });
 
 function isValidEmailAddress(emailAddress) {
     var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
     return pattern.test(emailAddress);
 }
+
+
+
+
+var generateId = function(length) {
+    let ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let rtn = '';
+    for (let i = 0; i < length; i++) {
+        rtn += ALPHABET.charAt(Math.floor(Math.random() * ALPHABET.length));
+    }
+    return rtn;
+};
