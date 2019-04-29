@@ -41,31 +41,30 @@
                 <div id="byRoute">By Route</div>
                 <div id="byFlight">By Flight</div>
             </div>
-            <form action="php/basic_query.php" method = "post">
-                <div class="searchInputs routeBlock">
-                    <div class="inputBlock">
-                        <div class="searchInputPlaceHolder">FROM</div>
-                        <input type="text" name = "depInput" id="depInput" class="searchInput" placeholder="where you departure">
-                    </div>
-                    <div class="inputBlock">
-                        <div class="searchInputPlaceHolder">TO</div>
-                        <input type="text" name = "desInput" id="desInput" class="searchInput" placeholder="your destination">
-                    </div>
-                    <div class="inputBlock">
-                        <div class="searchInputPlaceHolder">DEPARTURE DATE</div>
-                        <input type="text" id="depDateInput" class="searchInput" placeholder="Your Departure Date">
-                    </div>
-                    <div class="inputBlock">
-                        <div class="searchInputPlaceHolder">RETURN DATE</div>
-                        <input type="text" id="desDateInput" class="searchInput" placeholder="Your Return Date">
-                    </div>
-                    <div class="inputBlock">
-                        <div class="inputBlock">
-                            <input type="Submit" value = "check my flight" name = "routeSubmit"  class="searchSubmit" />
-                        </div>
+            <div class="searchInputs routeBlock">
+                <div class="inputBlock">
+                    <div class="searchInputPlaceHolder">FROM</div>
+                    <input type="text" name="depInput" id="depInput" class="searchInput"
+                           placeholder="where you departure">
+                </div>
+                <div class="inputBlock">
+                    <div class="searchInputPlaceHolder">TO</div>
+                    <input type="text" name="desInput" id="desInput" class="searchInput" placeholder="your destination">
+                </div>
+                <div class="inputBlock">
+                    <div class="searchInputPlaceHolder">DEPARTURE DATE</div>
+                    <input type="text" id="depDateInput" class="searchInput" placeholder="Your Departure Date">
+                </div>
+                <div class="inputBlock">
+                    <div class="searchInputPlaceHolder">RETURN DATE</div>
+                    <input type="text" id="desDateInput" class="searchInput" placeholder="Your Return Date">
+                </div>
+                <div class="inputBlock">
+                    <div id="routeSubmit" class="searchSubmit">
+                        Check My Flight
                     </div>
                 </div>
-            </form>
+            </div>
             <div class="searchInputs flightBlock">
                 <div class="inputBlock">
                     <div class="searchInputPlaceHolder">Airline</div>
@@ -105,7 +104,7 @@
         <input id="password" type="password">
         <div id="passwordHint" class="errorHint"></div>
         <div style="display: none" class="textHint hideForm">Confirm password</div>
-        <input  id="confirm_password" style="display: none" type="password" class="hideForm">
+        <input id="confirm_password" style="display: none" type="password" class="hideForm">
         <div id="confirmHint" style="display: none" class="errorHint hideForm"></div>
         <div id="login_button">Sign in</div>
         <div id="changeMode">
@@ -115,5 +114,7 @@
     </div>
 </div>
 <!-- the login window ends here -->
+<!-- hidden from -->
+<div id="hidden_form_container" style="display:none;"></div>
 </body>
 </html>

@@ -202,12 +202,51 @@ $('document').ready(function () {
             dataType: "json",
             success: function (data, textStatus, jqXHR) {
                 //window.location.href = "query.html?searchId = " + searchId;
+
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
 
             }
         });
-    })
+        var theForm, newInput1, newInput2, newInput3,newInput4, newInput5, newInput6;
+        theForm = document.createElement('form');
+        theForm.action = 'php/basic_query.php';
+        theForm.method = 'post';
+        newInput1 = document.createElement('input');
+        newInput1.type = 'hidden';
+        newInput1.name = 'depInput';
+        newInput1.value = deStr;
+        newInput2 = document.createElement('input');
+        newInput2.type = 'hidden';
+        newInput2.name = 'desInput';
+        newInput2.value = desStr;
+        newInput3 = document.createElement('input');
+        newInput3.type = 'hidden';
+        newInput3.name = 'routeSubmit';
+        newInput3.value = 1;
+        newInput4 = document.createElement('input');
+        newInput4.type = 'hidden';
+        newInput4.name = 'deDate';
+        newInput4.value = deDate;
+        newInput5 = document.createElement('input');
+        newInput5.type = 'hidden';
+        newInput5.name = 'reDate';
+        newInput5.value = reDate;
+        newInput6 = document.createElement('input');
+        newInput6.type = 'hidden';
+        newInput6.name = 'round';
+        newInput6.value = roundTrip;
+
+        theForm.appendChild(newInput1);
+        theForm.appendChild(newInput2);
+        theForm.appendChild(newInput3);
+        theForm.appendChild(newInput4);
+        theForm.appendChild(newInput5);
+        theForm.appendChild(newInput6);
+
+        document.getElementById('hidden_form_container').appendChild(theForm);
+        theForm.submit();
+    });
 
     $('#flightNumberSubmit').click(function () {
 
@@ -253,6 +292,34 @@ $('document').ready(function () {
 
             }
         });
+        var theForm, newInput1, newInput2, newInput3,newInput4;
+        theForm = document.createElement('form');
+        theForm.action = 'php/basic_query.php';
+        theForm.method = 'post';
+        newInput1 = document.createElement('input');
+        newInput1.type = 'hidden';
+        newInput1.name = 'flight';
+        newInput1.value = flightNumber;
+        newInput2 = document.createElement('input');
+        newInput2.type = 'hidden';
+        newInput2.name = 'airline';
+        newInput2.value = airlineStr;
+        newInput3 = document.createElement('input');
+        newInput3.type = 'hidden';
+        newInput3.name = 'deDate';
+        newInput3.value = deDate;
+        newInput4 = document.createElement('input');
+        newInput4.type = 'hidden';
+        newInput4.name = 'routeSubmit';
+        newInput4.value = 0;
+
+        theForm.appendChild(newInput1);
+        theForm.appendChild(newInput2);
+        theForm.appendChild(newInput3);
+        theForm.appendChild(newInput4);
+
+        document.getElementById('hidden_form_container').appendChild(theForm);
+        theForm.submit();
     })
 });
 
