@@ -68,10 +68,15 @@ $('document').ready(function () {
             alert("say something");
             return;
         }
+        let username = "Anonymous Passenger";
+        if (getCookie("username") != null){
+            username = getCookie("username").split("@")[0];
+        }
         goEasy.publish({
             channel: $('#chatRoomChannelName').text(),
-            message: message + "锺" + message
+            message: username + "锺" + message
         });
+        $('#chatRoomInputText').val("");
     })
 });
 
