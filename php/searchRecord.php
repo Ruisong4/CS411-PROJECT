@@ -10,7 +10,7 @@
     $returnDate = $_POST["returnDate"];
     $roundTrip = $_POST["roundTrip"] == '1' ? 1 : 0;
 
-    $insert = "INSERT INTO `searchRecord`(`searchId`, `type`, `airline`, `flightNumber`, 
+    $insert = "INSERT INTO `searchrecord`(`searchId`, `type`, `airline`, `flightNumber`, 
                 `destination`, `departure`, `departureDate`, `roundTrip`, `returnDate`) 
                 VALUES ('$searchId','$type','$airline','$flightNumber','$destination'
                 ,'$departure','$departureDate','$roundTrip','$returnDate')";
