@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <title>FlyOnTime - Chat</title>
     <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/chat.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="css/triphistory.css">
     <script
             src="https://code.jquery.com/jquery-2.2.4.min.js"
             integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
             crossorigin="anonymous">
     </script> <!-- loading jquery lib -->
-    <script src="https://cdn-virginia.goeasy.io/goeasy.js​"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="javascript/cookieTool.js"></script>
     <script src="javascript/header.js"></script>
-    <script src="javascript/chat.js"></script>
-
+    <script src="javascript/tripHistory.js"></script>
 </head>
 <body>
 <!-- top nav start here -->
@@ -25,39 +25,46 @@
         <a href="manage_airport.html" class="navLink">Mamage Airport</a>
         <a href="index.html" class="navLink">Search</a>
         <a class="navLink">News</a>
-        <a class="navLink" href="javascript:void(0)">Chat</a>
-        <a id="showLogin" class="navLink">MY TRIP</a>
+        <a class="navLink" href="chat.html">Chat</a>
+        <a id="showLogin" href="javascript:void(0)" class="navLink">MY TRIP</a>
     </div>
 </div>
 <!-- top nav ends here -->
 <div id="mainContainer">
-    <img src="resources/img/main_background.jpg" id="mainBack">
-    <div id="chooseChannel">
-        <div id="chooseChannelTitle">
-            INPUT YOUR FLIGHT NUMBER
+    <img src="resources/img/flight.jpg" id="mainBack">
+    <div id="userReview">
+        <div id="userReviewTitle">Your Past Trips Are Listed Below</div>
+        <div id="reviewHeader">
+            <div>AIRLINE</div>
+            <div>FLIGHT NUMBER</div>
+            <div>DATE</div>
+            <div>DELAY INFO</div>
         </div>
-        <input type="text" id="ChatChannel">
-        <div id="joinChannel">Join the Room</div>
-    </div>
-    <div id="chatRoom">
-        <div id="chatRoomChannelName">
-            FLIGHT AA123
-        </div>
-        <div id="messageContainer">
-            <div class="messageItem">
-                <div class="fromUser">
-                    FLY BOT
-                </div>
-                <div class="message" style="color: RED !important;">
-                    welcome to the chat room, you can meet people who fly with you here.
-                </div>
+        <div id="userReviewContent">
+            <div class="reviewItem" id="insert">
+                +
+            </div>
+            <div id="insertingBlock">
+                <div class="placeholder">AIRLINE</div>
+                <input type="text" id="insertAirline">
+                <div class="placeholder">FLIGHT NUMBER</div>
+                <input type="text" id="insertNumber">
+                <div class="placeholder">DATE</div>
+                <input type="text" id="insertDate" placeholder="Select the date of your flight">
+                <div class="placeholder">DELAY INFO</div>
+                <select id="insertInfo">
+                    <option>No Delay</option>
+                    <option>About 15 Minutes</option>
+                    <option>About 30 Minutes</option>
+                    <option>Above 30 Minutes</option>
+                </select>
+                <div id="insertSubmit">Submit Review</div>
+                <div id="insertCancel">Cancel</div>
             </div>
         </div>
-        <div id="chatRoomInputSection">
-            <input type="text" id="chatRoomInputText">
-            <div id="chatRoomInputButton">
-                Send
-            </div>
+        <div id="reviewSummary">
+            You have 15 review and they are worth 150 points.
+            Thanks for your help!
         </div>
     </div>
 </div>

@@ -11,6 +11,10 @@ window.onload = function () {
 
     //function to open login window
     document.getElementById("showLogin").onclick = function () {
+        if (getCookie("logged_in") == "true"){
+            window.location.href = "./triphistory.html";
+            return;
+        }
         document.getElementById("globalLayer").style.display = "block";
     };
 
@@ -27,7 +31,7 @@ window.onload = function () {
         for (var i = 0; i< elements.length; i++){
             elements[i].style.display = toSignup ? "block" : "none";
         }
-    }
+    };
 
     $('#login_button').click(function () {
         let usernameHint = $('#usernameHint');
@@ -93,7 +97,8 @@ window.onload = function () {
                     }
                     setCookie("logged_in", true, "h6");
                     setCookie("username", usernameInput.val(), "h6");
-                    location.reload(true);
+                    window.location.href = "./triphistory.html";
+                    return;
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
 

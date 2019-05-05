@@ -104,9 +104,10 @@ $('document').ready(function () {
             alert("departure date should be earlier than arrival date");
             return;
         }
-
-        deDate = deDate=="" ? "" : deDate.getFullYear() + "-" + deDate.getMonth() + "-" + deDate.getDay();
-        reDate = reDate=="" ? "" : reDate.getFullYear() + "-" + reDate.getMonth() + "-" + reDate.getDay();
+        let realMonth1 =  deDate.getMonth() + 1;
+        let realMonth2 =  reDate.getMonth() + 1;
+        deDate = deDate=="" ? "" : deDate.getFullYear() + "-" + realMonth1 + "-" + deDate.getDate();
+        reDate = reDate=="" ? "" : reDate.getFullYear() + "-" + realMonth2 + "-" + reDate.getDate();
         let searchId = generateId(15);
         let roundTrip = reDate == "" ? 0 : 1;
         reDate = reDate == ""? "1111-11-11" : reDate;
@@ -194,7 +195,9 @@ $('document').ready(function () {
             alert("please select a departure date");
             return;
         }
-        deDate = deDate.getFullYear() + "-" + deDate.getMonth() + "-" + deDate.getDay();
+
+        let realMonth = deDate.getMonth() + 1;
+        deDate = deDate.getFullYear() + "-" + realMonth  + "-" + deDate.getDate();
         $.ajax({
             type: "POST",
             url: "./php/searchRecord.php",
