@@ -1,43 +1,51 @@
 $('document').ready(function () {
+    if (getCookie("username")!="nobody" && getCookie("username") != null){
+        $.ajax(
+            {
+                type: "POST",
+                url: "./php/getHistory.php",
+                data: {
+                    "user":getCookie("username")
+                },
+                cache: false,
+                async: false,
+                dataType: "json",
+                success: function (data, textStatus, jqXHR) {
+                    $("#reviewSummary").text("You have 15 review and they are worth " +data.length * 10+
+                        " points. Thanks for your help!");
+                    for (let i = 0; i < data.length; i++){
+                        let a = $( "<div class=\'reviewItem\'></div>" );
+                        let b = $( "<div></div>" ).text(data[i].airline);
+                        let c = $( "<div></div>" ).text(data[i].flight_number);
+                        let d = $( "<div></div>" ).text(data[i].flight_date);
+                        let e = $( "<div></div>" );
+                        if (data[i].no_delay == "1"){
+                            e.text("No Delay")
+                        }
+                        if (data[i].below_fifteen == "1"){
+                            e.text("Around Thirty Minutes")
+                        }
+                        if (data[i].below_thirty == "1"){
+                            e.text("Around Thirty Minutes")
+                        }
+                        if (data[i].above_thirty == "1"){
+                            e.text("Above Thirty Minutes")
+                        }
+                        a.append(b,c,d,e);
+                        a.insertBefore("#insert")
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
 
-    $.ajax(
-        {
-            type: "POST",
-            url: "./php/getHistory.php",
-            data: {
-                "user":getCookie("username")
-            },
-            cache: false,
-            async: false,
-            dataType: "json",
-            success: function (data, textStatus, jqXHR) {
-                for (let i = 0; i < data.length; i++){
-                    let a = $( "<div class=\'reviewItem\'></div>" );
-                    let b = $( "<div></div>" ).text(data[i].airline);
-                    let c = $( "<div></div>" ).text(data[i].flight_number);
-                    let d = $( "<div></div>" ).text(data[i].flight_date);
-                    let e = $( "<div></div>" );
-                    if (data[i].no_delay == "1"){
-                        e.text("No Delay")
-                    }
-                    if (data[i].below_fifteen == "1"){
-                        e.text("Around Thirty Minutes")
-                    }
-                    if (data[i].below_thirty == "1"){
-                        e.text("Around Thirty Minutes")
-                    }
-                    if (data[i].above_thirty == "1"){
-                        e.text("Above Thirty Minutes")
-                    }
-                    a.append(b,c,d,e);
-                    a.insertBefore("#insert")
                 }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-
             }
-        }
-    );
+        );
+    }
+
+    if(getCookie("username") == null){
+        setCookie("username", "nobody", "h6");
+    }
+
 
     let dateInput = flatpickr('#insertDate', {});
 
