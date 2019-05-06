@@ -97,7 +97,7 @@ window.onload = function () {
                     }
                     setCookie("logged_in", true, "h6");
                     setCookie("username", usernameInput.val(), "h6");
-                    window.location.href = "./triphistory.html";
+                    window.location.href = "./tripHistory.html";
                     return;
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
