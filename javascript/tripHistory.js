@@ -59,6 +59,8 @@ $('document').ready(function () {
     });
 
     $('#insertSubmit').on('click',function () {
+        let des = "LAX";
+        let dep = "JFK";
         let airline = $('#insertAirline').val();
         let flight =$('#insertNumber').val();
         let dateInput2 = dateInput.selectedDates == "" ? "" : new Date(dateInput.selectedDates);
@@ -96,7 +98,9 @@ $('document').ready(function () {
                             "s2":s2,
                             "s3":s3,
                             "s4":s4,
-                            "user":getCookie("username")
+                            "user":getCookie("username"),
+                            "des": des,
+                            "dep": dep,
                         },
                         cache: false,
                         async: false,

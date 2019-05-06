@@ -197,7 +197,6 @@ $('document').ready(function () {
         newInput6.type = 'hidden';
         newInput6.name = 'round';
         newInput6.value = roundTrip;
-        alert(deStr);
         theForm.appendChild(newInput1);
         theForm.appendChild(newInput2);
         theForm.appendChild(newInput3);
