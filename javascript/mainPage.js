@@ -1,5 +1,34 @@
 $('document').ready(function () {
 
+    if (getCookie("recentSearch") != null){
+        $.ajax({
+            type: "POST",
+            url: "./php/recordLoopUp.php",
+            data: {
+                "searchId":getCookie("recentSearch"),
+            },
+            cache: false,
+            async: false,
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+                if (data.length > 0){
+                    let today = new Date();
+                    let dateArray = data[0].departureDate.split("-");
+                    if ((today.getMonth() + 1 > parseInt(dateArray[1]))||(
+                        (today.getMonth() + 1 == parseInt(dateArray[1]))
+                        && today.getDate() > parseInt(dateArray[2])
+                    )){
+                        $('#reviewBroadcast').css("display","block");
+                        $('#reviewText b').text(data[0].destination);
+                    }
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+            }
+        });
+    }
+
     let departureDate = flatpickr('#depDateInput', {});
     let returnDate = flatpickr('#desDateInput', {});
     let numberDate = flatpickr('#flightNumberDate', {});
@@ -104,11 +133,15 @@ $('document').ready(function () {
             alert("departure date should be earlier than arrival date");
             return;
         }
+        let realMonth2 = "";
+        if(reDate!=""){
+            realMonth2 =  reDate.getMonth() + 1;
+        }
         let realMonth1 =  deDate.getMonth() + 1;
-        let realMonth2 =  reDate.getMonth() + 1;
         deDate = deDate=="" ? "" : deDate.getFullYear() + "-" + realMonth1 + "-" + deDate.getDate();
         reDate = reDate=="" ? "" : reDate.getFullYear() + "-" + realMonth2 + "-" + reDate.getDate();
         let searchId = generateId(15);
+        setCookie("recentSearch",searchId,"d365");
         let roundTrip = reDate == "" ? 0 : 1;
         reDate = reDate == ""? "1111-11-11" : reDate;
         $.ajax({
@@ -164,7 +197,7 @@ $('document').ready(function () {
         newInput6.type = 'hidden';
         newInput6.name = 'round';
         newInput6.value = roundTrip;
-
+        alert(deStr);
         theForm.appendChild(newInput1);
         theForm.appendChild(newInput2);
         theForm.appendChild(newInput3);
@@ -175,6 +208,12 @@ $('document').ready(function () {
         document.getElementById('hidden_form_container').appendChild(theForm);
         theForm.submit();
     });
+
+    $('#broadCastClose').click(function () {
+        delCookie("recentSearch");
+        $('#reviewBroadcast').css("display","none");
+    });
+
 
     $('#flightNumberSubmit').click(function () {
 
@@ -188,7 +227,7 @@ $('document').ready(function () {
 
         let airlineStr = airline.match(/, [A-Z][A-Z]/)[0].substring(2);
         let searchId = generateId(15);
-
+        setCookie("recentSearch",searchId,"d365");
         let deDate = new Date(numberDate.selectedDates);
 
         if(deDate == ""){

@@ -157,3 +157,57 @@
     height: 200px;
     background: rgb(18, 18, 18);
 }
+
+#reviewBroadcast{
+    position: fixed;
+    z-index: 10;
+    right: 0;
+    bottom: 0;
+    height: 300px;
+    width: 300px;
+    background: #3c3c3c;
+    display: none;
+}
+
+#broadCastClose{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    color: #f0f0f0;
+}
+
+#reviewText{
+    margin: 50px auto 20px auto;
+    width: 70%;
+    height: auto;
+    color: #f0f0f0;
+    font-size: 30px;
+    line-height: 40px;
+    text-align: center;
+}
+
+#goToReview{
+    height: 30px;
+    line-height: 30px;
+    font-size: 15px;
+    padding: 0 30px;
+    font-family: Staatliches;
+    cursor: pointer;
+    color: #000;
+    margin: 20px auto 0px auto;
+    width: fit-content;
+    width: -moz-fit-content;
+    text-align: center;
+    border-radius: 3px;
+    /** auto generated gradient code do not modify**/
+    background: rgba(241,231,103,1);
+    background: -moz-linear-gradient(left, rgba(241,231,103,1) 0%, rgba(254,182,69,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(241,231,103,1)), color-stop(100%, rgba(254,182,69,1)));
+    background: -webkit-linear-gradient(left, rgba(241,231,103,1) 0%, rgba(254,182,69,1) 100%);
+    background: -o-linear-gradient(left, rgba(241,231,103,1) 0%, rgba(254,182,69,1) 100%);
+    background: -ms-linear-gradient(left, rgba(241,231,103,1) 0%, rgba(254,182,69,1) 100%);
+    background: linear-gradient(to right, rgba(241,231,103,1) 0%, rgba(254,182,69,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f1e767', endColorstr='#feb645', GradientType=1 );
+
+}
