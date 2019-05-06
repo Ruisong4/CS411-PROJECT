@@ -36,8 +36,9 @@ $('document').ready(function () {
     let routeSuggestDes;
     let airlineSuggest;
 
+
     $("#goToReview").click(function () {
-        window.location.href = "./tripHistory.html"
+        window.location.href = "./tripHistory.html?from=index";
     });
 
     $("#byRoute").click(function () {

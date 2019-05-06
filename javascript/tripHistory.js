@@ -1,4 +1,7 @@
 $('document').ready(function () {
+    if (window.location.href.includes("from=index")){
+        $('#insertingBlock').css("display","block")
+    }
     if (getCookie("username")!="nobody" && getCookie("username") != null){
         $.ajax(
             {
