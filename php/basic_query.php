@@ -54,6 +54,11 @@ EOT;
         print <<<EOT
         </tbody>
         </table>
+        <div class="inputBlock" onclick="window.location.href= 'http://sp19-cs411-35.cs.illinois.edu/visual/flight_chart.html';return false"  align="center" style="width: 100%">
+            <div id="flightNumberSubmit" class="searchSubmit">
+                Visualize It!
+            </div>
+        </div>
         <div class="inputBlock" onclick="window.location.href= 'http://sp19-cs411-35.cs.illinois.edu';return false"  align="center" style="width: 100%">
             <div id="flightNumberSubmit" class="searchSubmit">
                 Back To Main Page

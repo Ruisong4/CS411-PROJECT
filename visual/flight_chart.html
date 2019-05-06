@@ -38,6 +38,7 @@
        <div id="container" style="background-color:rgba(255, 255, 255, 0.7); top: 4pc;height: 60%; width: 60%; left:20%" >Delay Situation in 30 Days</div>
        <div id="container1" style="background-color:rgba(255, 255, 255, 0.7); top: 6pc;height: 60%;width: 60%; left:20%">Overall Delay Info</div>
        <div id="container2" style="background-color:rgba(255, 255, 255, 0.7); top: 8pc;height: 60%;width: 60%; left:20%">Overall Delay Info</div>
+       <div id="container3" style="background-color:rgba(255, 255, 255, 0.7); top: 10pc;height: 60%;width: 60%; left:20%">User Delay Info</div>
        <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
        <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
        <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
@@ -51,6 +52,16 @@
 
 var airport1_ = "LAX";
 var airport2_ = "ORD";
+var iata_to_airline = {"UA": "United Airlines", "AA": "American Airlines",
+                        "US": "US Airways", "F9": "Frontier Airlines",
+                        "B6": "Jetblue Airways", "OO": "Skywest Airlines",
+                        "AS": "Alaska Airlines", "NK": "Spirit Airlines",
+                        "WN": "Southwest Airlines", "DL": "Delta Airlines",
+                        "EV": "Atlantic Southeast Airlines", "HA": "Hawaiian Airlines",
+                        "MQ": "American Eagle Airlines", "VX": "Virgin America"};
+
+
+                        
 function chart0(airport1_, airport2_){
 
     var dom = document.getElementById("container0");
@@ -385,89 +396,32 @@ function chart0(airport1_, airport2_){
         airlines[i] = n[i].airline;
     }
 
-    function getroutes(iata){
+    function getroutes(arg1, arg2){
         var options={
             type:"GET",
-            url:"../php/GetRoutes.php",
-            data:{airline: iata},
+            url:"../php/Get_cities.php",
+            data:{iata1: arg1, iata2: arg2},
             async:false,
             success:function (msg) {
                 message=msg;
+                //alert(message);
             },
             fail:function(){
                 alert(message);
             }
         };
         $.ajax(options);
+
         return message;
     }
 
     function transfrom_array(arr){
-        for (key in routes){
-            var fromCoord = geoCoordMap[routes[key][0]];
-            var toCoord = geoCoordMap[routes[key][1]];
-            if(fromCoord == undefined || toCoord == undefined){
-                continue;
-            }
-            arr.push([{name: routes[key][0]},{name:routes[key][1],value:95}]);
-        }
+        arr.push([{name: routes[0].city},{name:routes[1].city,value:95}]);
     }
 
-    var routes = JSON.parse(getroutes("UA"));
+    var routes = JSON.parse(getroutes(airport1_, airport2_));
     var UA_Route = new Array();
     transfrom_array(UA_Route);
-
-    routes = JSON.parse(getroutes("AA"));
-    var AA_Route = new Array();
-    transfrom_array(AA_Route);
-
-    routes = JSON.parse(getroutes("US"));
-    var US_Route = new Array();
-    transfrom_array(US_Route);
-
-    routes = JSON.parse(getroutes("F9"));
-    var F9_Route = new Array();
-    transfrom_array(F9_Route);
-
-    routes = JSON.parse(getroutes("B6"));
-    var B6_Route = new Array();
-    transfrom_array(B6_Route);
-
-    routes = JSON.parse(getroutes("OO"));
-    var OO_Route = new Array();
-    transfrom_array(OO_Route);
-
-    routes = JSON.parse(getroutes("AS"));
-    var AS_Route = new Array();
-    transfrom_array(AS_Route);
-
-    routes = JSON.parse(getroutes("NK"));
-    var NK_Route = new Array();
-    transfrom_array(NK_Route);
-
-    routes = JSON.parse(getroutes("WN"));
-    var WN_Route = new Array();
-    transfrom_array(WN_Route);
-
-    routes = JSON.parse(getroutes("DL"));
-    var DL_Route = new Array();
-    transfrom_array(DL_Route);
-
-    routes = JSON.parse(getroutes("EV"));
-    var EV_Route = new Array();
-    transfrom_array(EV_Route);
-
-    routes = JSON.parse(getroutes("HA"));
-    var HA_Route = new Array();
-    transfrom_array(HA_Route);
-
-    routes = JSON.parse(getroutes("MQ"));
-    var MQ_Route = new Array();
-    transfrom_array(MQ_Route);
-
-    routes = JSON.parse(getroutes("VX"));
-    var VX_Route = new Array();
-    transfrom_array(VX_Route);
 
 
     var planePath = 'path://M1705.06,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705.06,1318.313z';
@@ -488,6 +442,7 @@ function chart0(airport1_, airport2_){
         }
         return res;
     };
+    //var data_to_draw = {fromName: iata_to_airline[airport1_], iata}
     var ob = convertData(UA_Route);
     // for(key in ob){
     //     document.write(ob.fromName);
@@ -496,11 +451,7 @@ function chart0(airport1_, airport2_){
 
     var color = ['#a6c84c', '#ffa022', '#46bee9','#a6c84c', '#ffa022', '#46bee9','#a6c84c', '#ffa022', '#46bee9', '#ffa022', '#46bee9','#a6c84c', '#ffa022', '#46bee9'];
     var series = [];
-    [['United Airlines', UA_Route], ['American Airlines', AA_Route], ['US Airways', US_Route],
-    ['Frontier Airlines', F9_Route],['JetBlue Airways', B6_Route],['Skywest Airlines', OO_Route],
-    ['Alaska Airlines', AS_Route],['Spirit Airlines', NK_Route],['Southwest Airlines', WN_Route],
-    ['Delta Airlines', DL_Route],['Hawaiian Airlines', HA_Route],['Atlantic Southeast Airlines', EV_Route],
-    ['American Eagle Airlines', MQ_Route],['Virgin America', VX_Route]].forEach(function (item, i) {
+    [['Your Selected Route', UA_Route]].forEach(function (item, i) {
         series.push({
             name: item[0] + ' Major Routes',
             type: 'lines',
@@ -522,7 +473,7 @@ function chart0(airport1_, airport2_){
             data: convertData(item[1])
         },
         {
-            name: item[0] + ' Major Routes',
+            name: item[0],
             type: 'lines',
             zlevel: 2,
             symbol: ['none', 'arrow'],
@@ -569,17 +520,50 @@ function chart0(airport1_, airport2_){
             },
             data: item[1].map(function (dataItem) {
                 return {
+                    name: dataItem[0].name,
+                    value: geoCoordMap[dataItem[0].name].concat([dataItem[0].value])
+                };
+            })
+        },
+        {
+            name: item[0] + ' Major Routes',
+            type: 'effectScatter',
+            coordinateSystem: 'geo',
+            zlevel: 2,
+            rippleEffect: {
+                brushType: 'stroke'
+            },
+            label: {
+                normal: {
+                    show: true,
+                    position: 'right',
+                    formatter: '{b}'
+                }
+            },
+            symbolSize: function (val) {
+                return val[2] / 8;
+            },
+            itemStyle: {
+                normal: {
+                    color: color[i]
+                }
+            },
+            data: item[1].map(function (dataItem) {
+                return {
                     name: dataItem[1].name,
                     value: geoCoordMap[dataItem[1].name].concat([dataItem[1].value])
                 };
             })
-        });
+        }
+        
+        
+        );
     });
 
     option = {
         backgroundColor: '#404a59',
         title : {
-            text: 'Flight On Time Visualization System',
+            text: 'Flight On Time Visualization System: From ' + airport1_ + " To " + airport2_,
             subtext: 'For routes connectiong the biggest 300 US cities',
             left: 'center',
             textStyle : {
@@ -594,10 +578,7 @@ function chart0(airport1_, airport2_){
             orient: 'vertical',
             top: 'top',
             left: 'left',
-            data:['United Airlines Major Routes', 'American Airlines Major Routes', 'US Airways Major Routes','Frontier Airlines Major Routes',
-            'JetBlue Airways Major Routes','Skywest Airlines Major Routes','Alaska Airlines Major Routes','Spirit Airlines Major Routes', 'Southwest Airlines Major Routes',
-            'Delta Airlines Major Routes', 'Hawaiian Airlines Major Routes', 'Atlantic Southeast Airlines Major Routes', 'American Eagle Airlines Major Routes',
-            'Virgin America Major Routes'],
+            data:['Your Selected Route'],
 
             textStyle: {
                 color: '#fff'
@@ -633,7 +614,7 @@ function chart0(airport1_, airport2_){
     }
 }
 
-chart0();
+chart0(airport1_, airport2_);
 
        </script>
        
@@ -1022,7 +1003,6 @@ function chart3(airport1_, airport2_){
         legend: {
                 orient: 'horizontal',
                 bottom: 'bottom',
-                data: ['More than 2 hours','More than 1 hour','Delay','On time']
             },
         toolbox: {
             show: false,
@@ -1086,6 +1066,215 @@ function chart3(airport1_, airport2_){
 chart3(airport1_, airport2_);
 
        </script>
+
+<script type="text/javascript">
+
+
+    function chart4(airport1_, airport2_){
+        var message = "fail";
+        function getroutes(iata, iata1){
+            var options={
+                type:"GET",
+                url:"../php/GetUserReview.php",
+                data:{airport: iata, airport1: iata1},
+                async:false,
+                success:function (msg) {
+                    message=msg;
+                },
+                fail:function(){
+                    alert(message);
+                }
+            };
+            $.ajax(options);
+            return message;
+        }
+        var delay_info = JSON.parse(getroutes(airport1_, airport2_));
+        var more_than_two = new Array();
+        var more_than_one = new Array();
+        var just_delay = new Array();
+        var on_time = new Array();
+        var iata = new Array();
+        var airports = new Array();
+    
+        for(key in delay_info){
+            iata[key] = delay_info[key].air;
+            more_than_two[key] = delay_info[key].ac / delay_info[key].ttl * 100;
+            more_than_one[key] = (delay_info[key].acs) / delay_info[key].ttl * 100;
+            just_delay[key] = (delay_info[key].acc) / delay_info[key].ttl * 100;
+            on_time[key] = (delay_info[key].acss) / delay_info[key].ttl * 100;
+            airports[key] = iata_to_airline[iata[key]];
+        }
+    
+        var dom = document.getElementById("container3");
+        var myChart = echarts.init(dom);
+        var app = {};
+        option = null;
+    
+        var posList = [
+            'left', 'right', 'top', 'bottom',
+            'inside',
+            'insideTop', 'insideLeft', 'insideRight', 'insideBottom',
+            'insideTopLeft', 'insideTopRight', 'insideBottomLeft', 'insideBottomRight'
+        ];
+    
+        app.configParameters = {
+            rotate: {
+                min: -90,
+                max: 90
+            },
+            align: {
+                options: {
+                    left: 'left',
+                    center: 'center',
+                    right: 'right'
+                }
+            },
+            verticalAlign: {
+                options: {
+                    top: 'top',
+                    middle: 'middle',
+                    bottom: 'bottom'
+                }
+            },
+            position: {
+                options: echarts.util.reduce(posList, function (map, pos) {
+                    map[pos] = pos;
+                    return map;
+                }, {})
+            },
+            distance: {
+                min: 0,
+                max: 100
+            }
+        };
+    
+        app.config = {
+            rotate: 90,
+            align: 'left',
+            verticalAlign: 'middle',
+            position: 'insideBottom',
+            distance: 15,
+            onChange: function () {
+                var labelOption = {
+                    normal: {
+                        rotate: app.config.rotate,
+                        align: app.config.align,
+                        verticalAlign: app.config.verticalAlign,
+                        position: app.config.position,
+                        distance: app.config.distance
+                    }
+                };
+                myChart.setOption({
+                    series: [{
+                        label: labelOption
+                    }, {
+                        label: labelOption
+                    }, {
+                        label: labelOption
+                    }, {
+                        label: labelOption
+                    }]
+                });
+            }
+        };
+    
+    
+        var labelOption = {
+            normal: {
+                show: true,
+                position: app.config.position,
+                distance: app.config.distance,
+                align: app.config.align,
+                verticalAlign: app.config.verticalAlign,
+                rotate: app.config.rotate,
+                formatter: '{c}  {name|{a}}',
+                fontSize: 16,
+                rich: {
+                    name: {
+                        textBorderColor: '#fff'
+                    }
+                }
+            }
+        };
+    
+        option = {
+            title : {
+                text: 'User Review Statistics for Each Airline',
+                left: 'center',
+            },
+            color: ['#003366', '#006699', '#4cabce', '#e5323e', '#003366', '#006699', '#4cabce', '#e5323e'],
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            legend: {
+                    orient: 'horizontal',
+                    bottom: 'bottom',
+                },
+            toolbox: {
+                show: false,
+                orient: 'vertical',
+                left: 'right',
+                top: 'center',
+                feature: {
+                    mark: {show: true},
+                    dataView: {show: true, readOnly: false},
+                    magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
+            },
+            calculable: true,
+            xAxis: [
+                {
+                    type: 'category',
+                    axisTick: {show: false},
+                    data: airports
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: 'no delay',
+                    type: 'bar',
+                    barGap: 0,
+                    label: labelOption,
+                    data: on_time
+                },
+                {
+                    name: 'above thirty',
+                    type: 'bar',
+                    label: labelOption,
+                    data: just_delay
+                },
+                {
+                    name: 'below fifteen',
+                    type: 'bar',
+                    label: labelOption,
+                    data: more_than_one
+                },
+                {
+                    name: 'below thirty',
+                    type: 'bar',
+                    label: labelOption,
+                    data: more_than_two
+                }
+            ]
+        };;
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    }
+    
+    chart4(airport1_, airport2_);
+    
+           </script>
 
 
    </body>
