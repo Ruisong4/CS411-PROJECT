@@ -105,9 +105,10 @@ EOT;
         <img id="logo_img" src="../resources/img/plane.png">
         <div id="logo_div">ON TIME</div>
         <div id="navLinks">
-            <a href="javascript:void(0)" class="navLink">Search</a>
-            <a class="navLink">News</a>
-            <a class="navLink">Chat</a>
+            <a href="../manage_airport.html" class="navLink">Manage Airport</a>
+            <a href="../index.html" class="navLink">Search</a>
+            <a class="navLink" href="../visual/index.html">Visual</a>
+            <a class="navLink" href="../chat.html">Chat</a>
             <a id="showLogin" class="navLink">MY TRIP</a>
         </div>
     </div>
