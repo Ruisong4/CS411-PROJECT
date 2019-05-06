@@ -4,7 +4,7 @@
  **/
 window.onload = function () {
     //function to close login window
-    var closeButton = document.getElementById("closeLogin");
+    var closeButton = document.getElementById("#closeLogin");
     closeButton.onclick = function () {
         document.getElementById("globalLayer").style.display = "none";
     };
