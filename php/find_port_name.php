@@ -65,9 +65,10 @@ EOT;
         print <<<EOT
         </tbody>
         </table>
-        <div class="inputBlock" onclick="window.location.href= 'http://sp19-cs411-35.cs.illinois.edu';return false"  align="center" style="width: 100%">
-            <div id="flightNumberSubmit" class="searchSubmit">
-                Back To Main Page
+        
+        <div class="inputBlock" onclick="window.location.href= 'http://sp19-cs411-35.cs.illinois.edu/visual/delay_chart.html';" align="center" style="width: 100%">
+            <div id="flightNumberSubmit1" class="searchSubmit">
+                Visualize This Airport
             </div>
         </div>
 

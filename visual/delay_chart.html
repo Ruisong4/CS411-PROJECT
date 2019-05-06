@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+
+        <link rel="stylesheet" href="../css/header.css">
+        <link rel="stylesheet" href="../css/mainPage.css">
+        <link rel="stylesheet" href="../css/jquery.auto-complete.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <script
+                src="https://code.jquery.com/jquery-2.2.4.min.js"
+                integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+                crossorigin="anonymous">
+        </script> <!-- loading jquery lib -->
+        <script src="../javascript/jquery.auto-complete.min.js"></script>
+        <script src="../javascript/cookieTool.js"></script>
+        <script src="../https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script src="../javascript/header.js"></script>
+        <script src="../javascript/mainPage.js"></script>
+        <div id="navContainer">
+            <img id="logo_img" src="../resources/img/plane.png">
+            <div id="logo_div">ON TIME</div>
+            <div id="navLinks">
+                <a href="../manage_airport.html" class="navLink">Mamage Airport</a>
+                <a href="javascript:void(0)" class="navLink">Search</a>
+                <a class="navLink">News</a>
+                <a class="navLink">Chat</a>
+                <a id="showLogin" class="navLink">MY TRIP</a>
+            </div>
+        </div>
+   <body style="height: 45%; margin: 0">
+    <div id="mainContainer">
+       <img src="../resources/img/main_background.jpg" id="mainBack">
+    </div>
+       <div id="container" style="background-color:rgba(255, 255, 255, 0.7); top: 4pc;height: 60%; width: 60%; left:20%" >Delay Situation in 30 Days</div>
+       <div id="container1" style="background-color:rgba(255, 255, 255, 0.7); top: 6pc;height: 60%;width: 60%; left:20%">Overall Delay Info</div>
+       <div id="container2" style="background-color:rgba(255, 255, 255, 0.7); top: 8pc;height: 60%;width: 60%; left:20%">Overall Delay Info</div>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+       <script type="text/javascript">
+       
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+var cellSize = [80, 80];
+var pieRadius = 30;
+
+var message = "fail";
+function getroutes(iata){
+    var options={
+        type:"GET",
+        url:"../php/delay_chart.php",
+        data:{airport: iata},
+        async:false,
+        success:function (msg) {
+            message=msg;
+        },
+        fail:function(){
+            alert(message);
+        }
+    };
+    $.ajax(options);
+    return message;
+}
+var delay_info = JSON.parse(getroutes("LAX"));
+
+
+
+function getVirtulData() {
+    var date = +echarts.number.parseDate('2017-02-01');
+    var end = +echarts.number.parseDate('2017-03-01');
+    var dayTime = 3600 * 24 * 1000;
+    var data = [];
+    for (var time = date; time < end; time += dayTime) {
+        data.push([
+            echarts.format.formatTime('yyyy-MM-dd', time),
+            Math.floor(Math.random() * 10000)
+        ]);
+    }
+    return data;
+}
+
+
+function getPieSeries(scatterData, chart) {
+    return echarts.util.map(scatterData, function (item, index) {
+        var center = chart.convertToPixel('calendar', item);
+        return {
+            id: index + 'pie',
+            type: 'pie',
+            center: center,
+            label: {
+                normal: {
+                    formatter: '{c}',
+                    position: 'inside'
+                }
+            },
+            radius: pieRadius,
+            data: [
+                {name: 'Delay for more than one hour', value: delay_info[index].acs},
+                {name: 'Delay', value: delay_info[index].ac},
+                {name: 'On time', value: delay_info[index].ttl}
+            ]
+        };
+    });
+}
+
+function getPieSeriesUpdate(scatterData, chart) {
+    return echarts.util.map(scatterData, function (item, index) {
+        var center = chart.convertToPixel('calendar', item);
+        return {
+            id: index + 'pie',
+            center: center
+        };
+    });
+}
+
+var scatterData = getVirtulData();
+
+option = {
+    title : {
+        text: 'Delay Situation in 30 Days',
+        left: 'center',
+    },
+    tooltip : {},
+    legend: {
+        data: ['Delay for more than one hour', 'Delay', 'On time'],
+        bottom: 20
+    },
+    calendar: {
+        top: 'middle',
+        left: 'center',
+        orient: 'vertical',
+        cellSize: cellSize,
+        yearLabel: {
+            show: false,
+            textStyle: {
+                fontSize: 30
+            }
+        },
+        dayLabel: {
+            margin: 20,
+            firstDay: 1,
+            nameMap: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+        },
+        monthLabel: {
+            show: false
+        },
+        range: ['2017-02']
+    },
+    series: [{
+        id: 'label',
+        type: 'scatter',
+        coordinateSystem: 'calendar',
+        symbolSize: 1,
+        label: {
+            normal: {
+                show: true,
+                formatter: function (params) {
+                    return echarts.format.formatTime('dd', params.value[0]);
+                },
+                offset: [-cellSize[0] / 2 + 10, -cellSize[1] / 2 + 10],
+                textStyle: {
+                    color: '#000',
+                    fontSize: 14
+                }
+            }
+        },
+        data: scatterData
+    }]
+};
+
+if (!app.inNode) {
+    var pieInitialized;
+    setTimeout(function () {
+        pieInitialized = true;
+        myChart.setOption({
+            series: getPieSeries(scatterData, myChart)
+        });
+    }, 10);
+
+    app.onresize = function () {
+        if (pieInitialized) {
+            myChart.setOption({
+                series: getPieSeriesUpdate(scatterData, myChart)
+            });
+        }
+    };
+};
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+
+
+        <script type="text/javascript">
+    var dom1 = document.getElementById("container1");
+    var myChart1 = echarts.init(dom1);
+    var app1 = {};
+    option1 = null;
+    var message1 = "fail";
+    function getroutes1(iata){
+        var options={
+            type:"GET",
+            url:"../php/delay_chart1.php",
+            data:{airport: iata},
+            async:false,
+            success:function (msg) {
+                message=msg;
+            },
+            fail:function(){
+                alert(message);
+            }
+        };
+        $.ajax(options);
+        return message;
+    }
+    var delay_info1 = JSON.parse(getroutes1("LAX"));
+
+    option1 = {
+        title : {
+            text: 'Overall Delay Situation',
+            x:'center'
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: ['More than 2 hours','More than 1 hour','Delay','On time','Departure before scheduled time']
+        },
+        series : [
+            {
+                name: 'Total Sample',
+                type: 'pie',
+                radius : '55%',
+                center: ['50%', '60%'],
+                data:[
+                    {value:delay_info1[0].acss, name:'More than 2 hours'},
+                    {value:delay_info1[0].acs, name:'More than 1 hour'},
+                    {value:delay_info1[0].ac , name:'Delay'},
+                    {value:delay_info1[0].ttl - delay_info1[0].ac, name:'On time'},
+                    {value:delay_info1[0].acc, name:'Departure before scheduled time'}
+                ],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    ;
+    if (option1 && typeof option1 === "object") {
+        myChart1.setOption(option1, true);
+    }
+           </script>
+
+            <script type="text/javascript">
+
+
+
+var message = "fail";
+function getroutes(iata){
+    var options={
+        type:"GET",
+        url:"../php/delay_chart2.php",
+        data:{airport: iata},
+        async:false,
+        success:function (msg) {
+            message=msg;
+        },
+        fail:function(){
+            alert(message);
+        }
+    };
+    $.ajax(options);
+    return message;
+}
+var delay_info = JSON.parse(getroutes("LAX"));
+
+var dom = document.getElementById("container2");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+
+var posList = [
+    'left', 'right', 'top', 'bottom',
+    'inside',
+    'insideTop', 'insideLeft', 'insideRight', 'insideBottom',
+    'insideTopLeft', 'insideTopRight', 'insideBottomLeft', 'insideBottomRight'
+];
+
+app.configParameters = {
+    rotate: {
+        min: -90,
+        max: 90
+    },
+    align: {
+        options: {
+            left: 'left',
+            center: 'center',
+            right: 'right'
+        }
+    },
+    verticalAlign: {
+        options: {
+            top: 'top',
+            middle: 'middle',
+            bottom: 'bottom'
+        }
+    },
+    position: {
+        options: echarts.util.reduce(posList, function (map, pos) {
+            map[pos] = pos;
+            return map;
+        }, {})
+    },
+    distance: {
+        min: 0,
+        max: 100
+    }
+};
+
+app.config = {
+    rotate: 90,
+    align: 'left',
+    verticalAlign: 'middle',
+    position: 'insideBottom',
+    distance: 15,
+    onChange: function () {
+        var labelOption = {
+            normal: {
+                rotate: app.config.rotate,
+                align: app.config.align,
+                verticalAlign: app.config.verticalAlign,
+                position: app.config.position,
+                distance: app.config.distance
+            }
+        };
+        myChart.setOption({
+            series: [{
+                label: labelOption
+            }, {
+                label: labelOption
+            }, {
+                label: labelOption
+            }, {
+                label: labelOption
+            }]
+        });
+    }
+};
+
+
+var labelOption = {
+    normal: {
+        show: true,
+        position: app.config.position,
+        distance: app.config.distance,
+        align: app.config.align,
+        verticalAlign: app.config.verticalAlign,
+        rotate: app.config.rotate,
+        formatter: '{c}  {name|{a}}',
+        fontSize: 16,
+        rich: {
+            name: {
+                textBorderColor: '#fff'
+            }
+        }
+    }
+};
+
+option = {
+    title : {
+        text: 'Delay Information for different airlines in this airport',
+        left: 'center',
+    },
+    color: ['#003366', '#006699', '#4cabce', '#e5323e'],
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        }
+    },
+    legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: ['More than 2 hours','More than 1 hour','Delay','On time']
+        },
+    toolbox: {
+        show: false,
+        orient: 'vertical',
+        left: 'right',
+        top: 'center',
+        feature: {
+            mark: {show: true},
+            dataView: {show: true, readOnly: false},
+            magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+            restore: {show: true},
+            saveAsImage: {show: true}
+        }
+    },
+    calculable: true,
+    xAxis: [
+        {
+            type: 'category',
+            axisTick: {show: false},
+            data: ['2012', '2013', '2014', '2015', '2016']
+        }
+    ],
+    yAxis: [
+        {
+            type: 'value'
+        }
+    ],
+    series: [
+        {
+            name: 'More than 2 hours',
+            type: 'bar',
+            barGap: 0,
+            label: labelOption,
+            data: [(delay_info[0].ttl - delay_info[0].ac) / delay_info[0].ttl, (delay_info[1].ttl - delay_info[1].ac) / delay_info[1].ttl, 
+            (delay_info[2].ttl - delay_info[2].ac) / delay_info[2].ttl, (delay_info[3].ttl - delay_info[3].ac) / delay_info[3].ttl, 
+            (delay_info[4].ttl - delay_info[4].ac) / delay_info[4].ttl]
+        },
+        {
+            name: 'More than 1 hour',
+            type: 'bar',
+            label: labelOption,
+            data: [(delay_info[0].ac - delay_info[0].acs) / delay_info[0].ttl, (delay_info[1].ac - delay_info[1].acs) / delay_info[1].ttl, 
+            (delay_info[2].ac - delay_info[2].acs) / delay_info[2].ttl, (delay_info[3].ac - delay_info[3].acs) / delay_info[3].ttl, 
+            (delay_info[4].ac - delay_info[4].acs) / delay_info[4].ttl]
+        },
+        {
+            name: 'Delay',
+            type: 'bar',
+            label: labelOption,
+            data: [(delay_info[0].acs - delay_info[0].acss) / delay_info[0].ttl, (delay_info[1].acs -delay_info[1].acss) / delay_info[1].ttl, 
+                    (delay_info[2].acs -delay_info[2].acss) / delay_info[2].ttl, (delay_info[3].acs -delay_info[3].acss) / delay_info[3].ttl, 
+                    (delay_info[4].acs -delay_info[4].acss) / delay_info[4].ttl]
+        },
+        {
+            name: 'On time',
+            type: 'bar',
+            label: labelOption,
+            data: [delay_info[0].acss / delay_info[0].ttl, delay_info[1].acss / delay_info[1].ttl, 
+            delay_info[2].acss / delay_info[2].ttl, delay_info[3].acss / delay_info[3].ttl, delay_info[4].acss / delay_info[4].ttl]
+        }
+    ]
+};;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+
+
+   </body>
+</html>
