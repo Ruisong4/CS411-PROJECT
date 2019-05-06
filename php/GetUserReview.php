@@ -1,8 +1,6 @@
 <?php
     $airport = $_GET['airport'];
     $airport1 = $_GET['airport1'];
-    $airport = "LAX";
-    $airport1 = "ORD";
     $server = "localhost";
     $db_username = "root"; 
     $db_password = "cs411fullscore"; 
