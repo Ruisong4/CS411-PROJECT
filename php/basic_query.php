@@ -15,13 +15,6 @@
         <div id="mainContainer">
         <img src="../resources/img/main_background.jpg" id="mainBack">
         <div>
-            <form action='shortest_path.php' method='POST'>
-                <input type='hidden' name='airport' value={$ori}>
-                <input type='hidden' name='airport1' value={$des}>    
-                <div class="inputBlock" style="text-align:center">
-                    <input type="Submit" value = "Find another plan" align = center name = "routeSubmit"  class="searchSubmit" />
-                </div>
-            </form>
         </div>
 
         <br><br><br><br><br><br><br>
@@ -68,7 +61,15 @@ EOT;
                 Visualize It!
             </div>
         </div>
-
+        <div div class="inputBlock" >
+                    <form action='shortest_path.php' method='POST'>
+                <input type='hidden' name='airport' value={$ori}>
+                <input type='hidden' name='airport1' value={$des}>    
+                <div class="inputBlock" style="text-align:center">
+                    <input type="Submit" value = "Find another plan" align = center name = "routeSubmit"  class="searchSubmit" />
+                </div>
+            </form>
+        </div>
         <div class="inputBlock" onclick="window.location.href= 'http://sp19-cs411-35.cs.illinois.edu';return false"  align="center" style="width: 100%">
             <div id="flightNumberSubmit" class="searchSubmit">
                 Back To Main Page
