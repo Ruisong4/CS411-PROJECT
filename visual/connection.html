@@ -49,8 +49,8 @@
         var airport3_ = getQueryVariable("airport2");
         alert(airport3_)
         $('#title1').text("Connection Result From " + airport1_ + " to " + airport3_);
-        $('#title2').text("---------<br>Connection 1: From " + airport1_ +" to "+ airport2_ + " <br>----------");
-        $('#title3').text("---------<br>Connection 1: From " + airport2_ +" to "+ airport3_ + " <br>----------");
+        $('#title2').text("---------Connection 1: From " + airport1_ +" to "+ airport2_ + "----------");
+        $('#title3').text("---------Connection 1: From " + airport2_ +" to "+ airport3_ + "----------");
         $("#flightNumberSubmit1").click(function () {
             window.location.href= '../visual/flight_chart.html?dep='+ airport1_+'&des='+airport2_;
         });
