@@ -8,11 +8,11 @@ window.onload = function () {
     closeButton.onclick = function () {
         document.getElementById("globalLayer").style.display = "none";
     };
-
+H
     //function to open login window
     document.getElementById("showLogin").onclick = function () {
         if (getCookie("logged_in") == "true"){
-            window.location.href = "./triphistory.html";
+            window.location.href = "./tripHistory.html";
             return;
         }
         document.getElementById("globalLayer").style.display = "block";

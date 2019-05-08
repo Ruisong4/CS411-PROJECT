@@ -34,6 +34,25 @@
 
 
        <div id="container" style="height:100%"></div>
+    <div id="globalLayer">
+        <div id="loginContainer">
+            <div id="closeLogin">X</div>
+            <div class="textHint">Email Address</div>
+            <input id="username" type="text">
+            <div id="usernameHint" class="errorHint"></div>
+            <div class="textHint">password</div>
+            <input id="password" type="password">
+            <div id="passwordHint" class="errorHint"></div>
+            <div style="display: none" class="textHint hideForm">Confirm password</div>
+            <input id="confirm_password" style="display: none" type="password" class="hideForm">
+            <div id="confirmHint" style="display: none" class="errorHint hideForm"></div>
+            <div id="login_button">Sign in</div>
+            <div id="changeMode">
+                <div id="changeInfo">need an account?</div>
+                <div id="changeButton">sign up</div>
+            </div>
+        </div>
+    </div>
        <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
        <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
        <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
