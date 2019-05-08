@@ -826,17 +826,18 @@
     function a3(){
         return airport3_;
     }
-    window.onload = function () {
+
+    $('document').ready(function () {
         document.getElementsByClassName("title")[0].innerHTML = "Connection Result From " + a1() + " to " + a3();
         document.getElementsByClassName("title")[0].innerHTML = "---------<br>Connection 1: From " + a1() +" to "+ a2() + " <br>----------";
         document.getElementsByClassName("title")[0].innerHTML = "---------<br>Connection 1: From " + a2() +" to "+ a3() + " <br>----------";
-        document.getElementById("visual1").onclick = function () {
+       $("#flightNumberSubmit1").click(function () {
             window.location.href= '../visual/flight_chart.html?dep='+ a1()+'&des='+a2();
-        }
-        document.getElementById("visual1").onclick = function () {
+        });
+        $("#flightNumberSubmit2").click(function () {
             window.location.href= '../visual/flight_chart.html?dep='+ a2()+'&des='+a3();
-        }
-    }
+        });
+    });
 
 </script>
 
