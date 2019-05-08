@@ -47,7 +47,16 @@
     var airport1_ = getQueryVariable("airport0");
     var airport2_ = getQueryVariable("airport1");
     var airport3_ = getQueryVariable("airport2");
-
+    alert(1)
+    document.getElementsByClassName("title")[0].innerHTML = "Connection Result From " + a1() + " to " + a3();
+    document.getElementsByClassName("title")[0].innerHTML = "---------<br>Connection 1: From " + a1() +" to "+ a2() + " <br>----------";
+    document.getElementsByClassName("title")[0].innerHTML = "---------<br>Connection 1: From " + a2() +" to "+ a3() + " <br>----------";
+    $("#flightNumberSubmit1").click(function () {
+        window.location.href= '../visual/flight_chart.html?dep='+ a1()+'&des='+a2();
+    });
+    $("#flightNumberSubmit2").click(function () {
+        window.location.href= '../visual/flight_chart.html?dep='+ a2()+'&des='+a3();
+    });
 
     var iata_to_airline = {
         "UA": "United Airlines", "AA": "American Airlines",
@@ -828,15 +837,7 @@
     }
 
     $('document').ready(function () {
-        document.getElementsByClassName("title")[0].innerHTML = "Connection Result From " + a1() + " to " + a3();
-        document.getElementsByClassName("title")[0].innerHTML = "---------<br>Connection 1: From " + a1() +" to "+ a2() + " <br>----------";
-        document.getElementsByClassName("title")[0].innerHTML = "---------<br>Connection 1: From " + a2() +" to "+ a3() + " <br>----------";
-       $("#flightNumberSubmit1").click(function () {
-            window.location.href= '../visual/flight_chart.html?dep='+ a1()+'&des='+a2();
-        });
-        $("#flightNumberSubmit2").click(function () {
-            window.location.href= '../visual/flight_chart.html?dep='+ a2()+'&des='+a3();
-        });
+
     });
 
 </script>
