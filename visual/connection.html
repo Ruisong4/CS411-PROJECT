@@ -43,615 +43,618 @@
 <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
 
 <script type="text/javascript">
-    var airport1_ = getQueryVariable("airport0");
-    var airport2_ = getQueryVariable("airport1");
-    var airport3_ = getQueryVariable("airport2");
-    alert(airport3_)
-    $('#title1').text("Connection Result From " + airport1_ + " to " + airport3_);
-    $('#title2').text("---------<br>Connection 1: From " + airport1_ +" to "+ airport2_ + " <br>----------");
-    $('#title3').text("---------<br>Connection 1: From " + airport2_ +" to "+ airport3_ + " <br>----------");
-    $("#flightNumberSubmit1").click(function () {
-        window.location.href= '../visual/flight_chart.html?dep='+ airport1_+'&des='+airport2_;
-    });
-    $("#flightNumberSubmit2").click(function () {
-        window.location.href= '../visual/flight_chart.html?dep='+ airport2_+'&des='+airport3_;
-    });
-
-    var iata_to_airline = {
-        "UA": "United Airlines", "AA": "American Airlines",
-        "US": "US Airways", "F9": "Frontier Airlines",
-        "B6": "Jetblue Airways", "OO": "Skywest Airlines",
-        "AS": "Alaska Airlines", "NK": "Spirit Airlines",
-        "WN": "Southwest Airlines", "DL": "Delta Airlines",
-        "EV": "Atlantic Southeast Airlines", "HA": "Hawaiian Airlines",
-        "MQ": "American Eagle Airlines", "VX": "Virgin America"
-    };
-
-    function getQueryVariable(variable)
-    {
-        var query = window.location.search.substring(1);
-        var vars = query.split("&");
-        for (var i=0;i<vars.length;i++) {
-            var pair = vars[i].split("=");
-            if(pair[0] == variable){return pair[1];}
-        }
-        return(false);
-    }
-
-    function chart0(airport1_, airport2_) {
-
-        var dom = document.getElementById("container0");
-        var myChart = echarts.init(dom);
-        var app = {};
-        option = null;
-        var geoCoordMap = {
-
-            'Allentown': [-75.4404, 40.652359999999994],
-            'Abilene': [-99.6819, 32.41132],
-            'Albuquerque': [-106.60918999999998, 35.04022],
-            'Aberdeen': [-98.42183, 45.449059999999996],
-            'Albany': [-84.19447, 31.53552],
-            'Nantucket': [-70.06018, 41.25305],
-            'Waco': [-97.23052, 31.611290000000004],
-            'Arcata/Eureka': [-124.10862, 40.978120000000004],
-            'Atlantic City': [-74.57717, 39.45758],
-            'Adak': [-176.64603, 51.877959999999995],
-            'Kodiak': [-152.49386, 57.74997],
-            'Alexandria': [-92.54856, 31.327370000000002],
-            'Augusta': [-81.9645, 33.36996],
-            'King Salmon': [-156.64921999999999, 58.6768],
-            'Albany': [-73.80298, 42.74812],
-            'Waterloo': [-92.40034, 42.55708],
-            'Amarillo': [-101.70593000000001, 35.21937],
-            'Anchorage': [-149.99618999999998, 61.174319999999994],
-            'Alpena': [-83.56029000000001, 45.078070000000004],
-            'Aspen': [-106.86885, 39.22316],
-            'Atlanta': [-84.42694, 33.640440000000005],
-            'Appleton': [-88.51948, 44.25741],
-            'Austin': [-97.66986999999999, 30.19453],
-            'Asheville': [-82.54181, 35.43619],
-            'Wilkes-Barre/Scranton': [-75.72426999999999, 41.33815],
-            'Kalamazoo': [-85.55206, 42.23488],
-            'Windsor Locks': [-72.68323000000001, 41.93887],
-            'Bethel': [-161.838, 60.77978],
-            'Bakersfield': [-119.05677, 35.4336],
-            'Binghamton': [-75.97961, 42.20848],
-            'Bangor': [-68.82814, 44.80744],
-            'Birmingham': [-86.75355, 33.562940000000005],
-            'Billings': [-108.54286, 45.80766],
-            'Bismarck': [-100.74672, 46.77411],
-            'Bemidji': [-94.93372, 47.50942],
-            'Bellingham': [-122.53753, 48.79275],
-            'Bloomington': [-88.91595, 40.477990000000005],
-            'Nashville': [-86.67818, 36.12448],
-            'Boise': [-116.22278, 43.564440000000005],
-            'Boston': [-71.00518000000001, 42.36435],
-            'Beaumont/Port Arthur': [-94.02069, 29.95083],
-            'Brunswick': [-81.46631, 31.25903],
-            'Aguadilla': [-67.12944, 18.49486],
-            'Brainerd': [-94.13723, 46.397859999999994],
-            'Brownsville': [-97.42586, 25.90683],
-            'Barrow': [-156.766, 71.28545],
-            'Butte': [-112.49746, 45.9548],
-            'Baton Rouge': [-91.14963, 30.53316],
-            'Burlington': [-73.15031, 44.473],
-            'Buffalo': [-78.73217, 42.94052],
-            'Burbank': [-118.3585, 34.20062],
-            'Baltimore': [-76.6682, 39.1754],
-            'Bozeman': [-111.15301000000001, 45.7769],
-            'Columbia': [-81.11954, 33.93884],
-            'Akron': [-81.44247, 40.916309999999996],
-            'Cedar City': [-113.09858, 37.70097],
-            'Cordova': [-145.47765, 60.49183000000001],
-            'Crescent City': [-124.23653, 41.780159999999995],
-            'Chattanooga': [-85.20379, 35.035270000000004],
-            'Charlottesville': [-78.45286, 38.13864],
-            'Charleston': [-80.04051, 32.89865],
-            'Cedar Rapids': [-91.71087, 41.88459],
-            'Sault Ste. Marie': [-84.47239, 46.25075],
-            'San Diego': [-117.27873000000001, 33.12723],
-            'Cleveland': [-81.8494, 41.41089],
-            'College Station': [-96.36381999999999, 30.588590000000003],
-            'Charlotte': [-80.94313000000001, 35.214009999999995],
-            'Columbus': [-82.89188, 39.99799],
-            'Champaign/Urbana': [-88.27806, 40.03925],
-            'Hancock': [-88.48906, 47.168420000000005],
-            'Moab': [-109.75483999999999, 38.75496],
-            'Cody': [-109.0238, 44.52019],
-            'Colorado Springs': [-104.70025, 38.80581],
-            'Columbia': [-92.21963000000001, 38.818090000000005],
-            'Casper': [-106.46446999999999, 42.908359999999995],
-            'Corpus Christi': [-97.50121999999999, 27.770359999999997],
-            'Charleston': [-81.59319, 38.37315],
-            'Columbus': [-84.93885999999999, 32.516329999999996],
-            'Covington': [-84.66216999999999, 39.04614],
-            'Mosinee': [-89.66678, 44.77762],
-            'Daytona Beach': [-81.05806, 29.179920000000003],
-            'Dallas': [-96.85177, 32.84711],
-            'Dayton': [-84.21938, 39.90238],
-            'Dubuque': [-90.70917, 42.40296],
-            'Arlington': [-77.03772, 38.85208],
-            'Denver': [-104.667, 39.85841],
-            'Dallas-Fort Worth': [-97.0372, 32.89595],
-            'Dothan': [-85.44963, 31.321340000000003],
-            'Dickinson': [-102.80195, 46.79739],
-            'Dillingham': [-158.50333999999998, 59.04541],
-            'Duluth': [-92.19365, 46.84209],
-            'Durango': [-107.75376999999999, 37.15152],
-            'Des Moines': [-93.66068, 41.534929999999996],
-            'Detroit': [-83.34884, 42.21206],
-            'Devils Lake': [-98.90878000000001, 48.11425],
-            'Eau Claire': [-91.48507, 44.86526],
-            'Eagle': [-106.9177, 39.64257],
-            'Elko': [-115.7917, 40.82493],
-            'Elmira': [-76.89144, 42.159909999999996],
-            'El Paso': [-106.37781000000001, 31.80667],
-            'Erie': [-80.17622, 42.08202],
-            'Escanaba': [-87.09373000000001, 45.72267],
-            'Eugene': [-123.21869, 44.123259999999995],
-            'Evansville': [-87.53063, 38.03799],
-            'New Bern': [-77.04294, 35.07297],
-            'Newark': [-74.16866, 40.6925],
-            'Key West': [-81.75956, 24.55611],
-            'Fairbanks': [-147.85967, 64.81368],
-            'Fargo': [-96.81499000000001, 46.91935],
-            'Fresno': [-119.71813999999999, 36.77619],
-            'Fayetteville': [-78.88, 34.99147],
-            'Kalispell': [-114.25506999999999, 48.3114],
-            'Flagstaff': [-111.67121999999999, 35.13845],
-            'Ft. Lauderdale': [-80.15275, 26.07258],
-            'Flint': [-83.74346, 42.9655],
-            'Sioux Falls': [-96.7417, 43.58135],
-            'Fort Smith': [-94.36744, 35.33659],
-            'Fort Wayne': [-85.19515, 40.97847],
-            'Gillette': [-105.53936000000002, 44.3489],
-            'Garden City': [-100.72440999999999, 37.92752],
-            'Spokane': [-117.53383999999998, 47.619859999999996],
-            'Grand Forks': [-97.17611, 47.949259999999995],
-            'Longview': [-94.71171, 32.384859999999996],
-            'Grand Junction': [-108.52673, 39.122409999999995],
-            'Gainesville': [-82.27178, 29.69006],
-            'Gulfport-Biloxi': [-89.07009000000001, 30.40728],
-            'Green Bay': [-88.12959000000001, 44.48507],
-            'Grand Island': [-98.30861, 40.96747],
-            'Killeen': [-97.8278, 31.0649],
-            'Grand Rapids': [-85.52277, 42.88082],
-            'Greensboro': [-79.9373, 36.09775],
-            'Greer': [-82.21885999999999, 34.89567],
-            'Gustavus': [-135.70738, 58.424380000000006],
-            'Great Falls': [-111.37069, 47.482],
-            'Columbus-Starkville-West Point': [-88.59137, 33.45033],
-            'Gunnison': [-106.93318000000001, 38.53396],
-            'Agana': [-144.79598000000001, 13.48345],
-            'Hayden': [-107.21766000000001, 40.48118],
-            'Hibbing': [-92.83899, 47.3866],
-            'Helena': [-111.98275, 46.60682],
-            'Honolulu': [-157.92241, 21.31869],
-            'Hobbs': [-103.21703000000001, 32.687529999999995],
-            'Houston': [-95.27889, 29.64542],
-            'White Plains': [-73.70756999999999, 41.066959999999995],
-            'Harlingen': [-97.65439, 26.228509999999996],
-            'Huntsville': [-86.77311, 34.64045],
-            'Hyannis': [-70.28036, 41.669340000000005],
-            'Hays': [-99.27403000000001, 38.84494],
-            'Chantilly': [-77.45581, 38.94453],
-            'Niagara Falls': [-78.94538, 43.10726],
-            'Houston': [-95.33972, 29.98047],
-            'Wichita': [-97.43305, 37.64996],
-            'Idaho Falls': [-112.07016999999999, 43.514559999999996],
-            'Wilmington': [-75.60653, 39.67872],
-            'Wilmington': [-77.90256, 34.27061],
-            'Iron Mountain/Kingsford': [-88.11454, 45.81835],
-            'Indianapolis': [-86.29438, 39.71733],
-            'International Falls': [-93.40307, 48.56619],
-            'Williston': [-103.64235, 48.17794],
-            'Islip': [-73.10021, 40.79524],
-            'Ithaca': [-76.45844, 42.49103],
-            'Hilo': [-155.04847, 19.72026],
-            'Jackson': [-110.73773999999999, 43.60732],
-            'Jackson': [-90.07589, 32.311170000000004],
-            'Jacksonville': [-81.68786, 30.494059999999998],
-            'New York': [-73.77893, 40.63975],
-            'Joplin': [-94.49826999999999, 37.15181],
-            'Jamestown': [-98.6782, 46.92972],
-            'Juneau': [-134.57628, 58.35496],
-            'Kailua/Kona': [-156.04563000000002, 19.738770000000002],
-            'Ketchikan': [-131.71374, 55.35556999999999],
-            'Lansing': [-84.58736, 42.7787],
-            'Laramie': [-105.67499, 41.31205],
-            'Las Vegas': [-115.15233, 36.08036],
-            'Lawton': [-98.41664, 34.56771],
-            'Los Angeles': [-118.40807, 33.94254],
-            'Lubbock': [-101.82278000000001, 33.66364],
-            'Latrobe': [-79.4048, 40.275940000000006],
-            'Lake Charles': [-93.2234, 30.1261],
-            'Lexington': [-84.60539, 38.036970000000004],
-            'Lafayette': [-91.98765999999999, 30.20528],
-            'New York': [-73.87261, 40.77724],
-            'Long Beach': [-118.15161, 33.81772],
-            'Lihue': [-159.33896000000001, 21.97598],
-            'Little Rock': [-92.22425, 34.7294],
-            'Lincoln': [-96.75925, 40.850970000000004],
-            'Laredo': [-99.46154, 27.543740000000003],
-            'La Crosse': [-91.25654, 43.87938],
-            'Lewiston': [-117.01539, 46.3745],
-            'Midland': [-102.20191, 31.942529999999998],
-            'Saginaw': [-84.07965, 43.53291],
-            'Kansas City': [-94.71391, 39.29761],
-            'Orlando': [-81.31603, 28.428890000000003],
-            'Harrisburg': [-76.7634, 40.1935],
-            'Chicago': [-87.75242, 41.78598],
-            'Meridian': [-88.75121, 32.33313],
-            'Memphis': [-89.97667, 35.04242],
-            'McAllen': [-98.23861, 26.175829999999998],
-            'Medford': [-122.8735, 42.37423],
-            'Montgomery': [-86.39398, 32.30064],
-            'Manhattan': [-96.67083000000001, 39.14097],
-            'Manchester': [-71.43706, 42.93452],
-            'Miami': [-80.29056, 25.79325],
-            'Milwaukee': [-87.89658, 42.94722],
-            'Muskegon': [-86.23822, 43.16949],
-            'Melbourne': [-80.64581, 28.10275],
-            'Moline': [-90.50754, 41.44853],
-            'Monroe': [-92.03769, 32.510870000000004],
-            'Mammoth Lakes': [-118.83776999999999, 37.62405],
-            'Mobile': [-88.24283, 30.69142],
-            'Minot': [-101.28033, 48.25938],
-            'Marquette': [-87.39536, 46.353640000000006],
-            'Monterey': [-121.84295, 36.58698],
-            'Madison': [-89.33751, 43.13986],
-            'Missoula': [-114.09056000000001, 46.916309999999996],
-            'Minneapolis': [-93.21692, 44.88055],
-            'New Orleans': [-90.25803, 29.99339],
-            'Montrose': [-107.89383000000001, 38.50887],
-            'Marthas Vineyard': [-70.61433000000001, 41.393029999999996],
-            'Myrtle Beach': [-78.92833, 33.67975],
-            'Jacksonville': [-77.61214, 34.829159999999995],
-            'Oakland': [-122.22072, 37.72129],
-            'Kahului': [-156.43046, 20.89865],
-            'Oklahoma City': [-97.60073, 35.39309],
-            'Omaha': [-95.89416999999999, 41.30252],
-            'Nome': [-165.44525, 64.5122],
-            'Ontario': [-117.60118999999999, 34.056],
-            'Chicago': [-87.90446, 41.9796],
-            'Norfolk': [-76.20121999999999, 36.89461],
-            'Worcester': [-71.87571, 42.267340000000004],
-            'North Bend': [-124.24603, 43.41714],
-            'Kotzebue': [-162.59855, 66.88468],
-            'Paducah': [-88.77375, 37.060829999999996],
-            'West Palm Beach': [-80.09559, 26.683159999999997],
-            'Portland': [-122.5975, 45.58872],
-            'Newport News': [-76.49299, 37.1319],
-            'Philadelphia': [-75.24114, 39.87195],
-            'Phoenix': [-112.00806000000001, 33.43417],
-            'Peoria': [-89.69331, 40.66424],
-            'Hattiesburg-Laurel': [-89.33706, 31.46715],
-            'Pocatello': [-112.59586000000002, 42.91131],
-            'Pittsburgh': [-80.23286999999999, 40.49147],
-            'Pellston': [-84.79672, 45.57093],
-            'Pensacola': [-87.18744000000001, 30.473309999999998],
-            'Pago Pago': [-170.71053, 14.33102],
-            'Pasco': [-119.11903000000001, 46.26468],
-            'Ponce': [-66.56300999999999, 18.0083],
-            'Petersburg': [-132.94528, 56.80165],
-            'Palm Springs': [-116.50625, 33.82922],
-            'Pueblo': [-104.49656999999999, 38.28909],
-            'Providence': [-71.42822, 41.724],
-            'Portland': [-70.30875, 43.64617],
-            'Rapid City': [-103.05736999999999, 44.045320000000004],
-            'Redding': [-122.2934, 40.50898],
-            'Redmond': [-121.14996000000001, 44.25407],
-            'Raleigh': [-78.78747, 35.87764],
-            'Rhinelander': [-89.46745, 45.631190000000004],
-            'Richmond': [-77.31967, 37.50517],
-            'Rock Springs': [-109.06518999999999, 41.59422],
-            'Reno': [-119.76806, 39.49858],
-            'Roanoke': [-79.97543, 37.32547],
-            'Rochester': [-77.67238, 43.11887],
-            'Roswell': [-104.53056, 33.301559999999995],
-            'Rochester': [-92.49799, 43.90883],
-            'Ft. Myers': [-81.75516999999999, 26.536170000000002],
-            'Santa Fe': [-106.08814, 35.61678],
-            'San Diego': [-117.18966, 32.73356],
-            'San Antonio': [-98.46978, 29.533690000000004],
-            'Savannah': [-81.20214, 32.12758],
-            'Santa Barbara': [-119.84037, 34.42621],
-            'South Bend': [-86.31846999999999, 41.70895],
-            'San Luis Obispo': [-120.64238999999999, 35.23706],
-            'Deadhorse': [-148.46516, 70.19476],
-            'State College': [-77.8463, 40.851209999999995],
-            'Louisville': [-85.736, 38.17439],
-            'Seattle': [-122.30931000000001, 47.44898],
-            'San Francisco': [-122.37483999999999, 37.619],
-            'Springfield': [-93.38686, 37.24433],
-            'St George': [-113.59306000000001, 37.090579999999996],
-            'Shreveport': [-93.8256, 32.44663],
-            'Sitka': [-135.3616, 57.04714],
-            'San Jose': [-121.92901, 37.36186],
-            'San Angelo': [-100.49631, 31.35775],
-            'San Juan': [-66.00183, 18.439420000000002],
-            'Salt Lake City': [-111.97776999999999, 40.78839],
-            'Sacramento': [-121.59076999999999, 38.69542],
-            'Santa Maria': [-120.45758000000001, 34.89925],
-            'Santa Ana': [-117.86822, 33.67566],
-            'Springfield': [-89.67761999999999, 39.84395],
-            'Wichita Falls': [-98.49189, 33.9888],
-            'Sarasota': [-82.55411, 27.395329999999998],
-            'St Cloud': [-94.05834, 45.545320000000004],
-            'St Louis': [-90.35999, 38.747690000000006],
-            'Charlotte Amalie': [-64.97336, 18.337310000000002],
-            'Christiansted': [-64.79856, 17.70189],
-            'Hailey': [-114.29659, 43.50484],
-            'Sioux City': [-96.38436999999999, 42.4026],
-            'Newburgh': [-74.10484, 41.504090000000005],
-            'Syracuse': [-76.10631, 43.11119],
-            'Tallahassee': [-84.35033, 30.39653],
-            'Toledo': [-83.80783000000001, 41.58681],
-            'Tampa': [-82.53325, 27.97547],
-            'Bristol': [-82.40742, 36.47521],
-            'Trenton': [-74.81347, 40.27669],
-            'Tulsa': [-95.88824, 36.198370000000004],
-            'Tucson': [-110.94103, 32.11608],
-            'Traverse City': [-85.58224, 44.741440000000004],
-            'Twin Falls': [-114.48773999999999, 42.4818],
-            'Texarkana': [-93.99101999999999, 33.45371],
-            'Tyler': [-95.40239, 32.35414],
-            'Knoxville': [-83.99286, 35.812490000000004],
-            'Vernal': [-109.50992, 40.4409],
-            'Valdosta': [-83.27672, 30.7825],
-            'Valparaiso': [-86.5254, 30.48325],
-            'Wrangell': [-132.36982, 56.48433000000001],
-            'West Yellowstone': [-111.11764, 44.6884],
-            'Fayetteville/Springdale/Rogers': [-94.30681, 36.28187],
-            'Yakutat': [-139.66023, 59.50336],
-            'Yuma': [-114.60597, 32.65658]
-        };
-        var message = "fail";
-
-        function ajaxRePost() {
-            var options = {
-                type: "GET",
-                url: "../php/GetAirline.php",
-                data: {},
-                async: false,
-                success: function (msg) {
-                    message = msg;
-                },
-                fail: function () {
-                    alert(message);
-                }
-            };
-            $.ajax(options);
-            return message;
-        }
-
-        var n = JSON.parse(ajaxRePost());
-        var iata_code = new Array();
-        var airlines = new Array();
-        for (var i in n) {
-            iata_code[i] = n[i].iata_code;
-            airlines[i] = n[i].airline;
-        }
-
-        function getroutes(arg1, arg2) {
-            var options = {
-                type: "GET",
-                url: "../php/Get_cities.php",
-                data: {iata1: arg1, iata2: arg2},
-                async: false,
-                success: function (msg) {
-                    message = msg;
-                    //alert(message);
-                },
-                fail: function () {
-                    alert(message);
-                }
-            };
-            $.ajax(options);
-
-            return message;
-        }
-
-        function transfrom_array(arr) {
-            arr.push([{name: routes[0].city}, {name: routes[1].city, value: 95}]);
-        }
-
-        var routes = JSON.parse(getroutes(airport1_, airport2_));
-        var UA_Route = new Array();
-        transfrom_array(UA_Route);
-        routes  = JSON.parse(getroutes(airport2_, airport3_));
-        transfrom_array(UA_Route);
-
-
-        var planePath = 'path://M1705.06,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705.06,1318.313z';
-
-        var convertData = function (data) {
-            var res = [];
-            for (var i = 0; i < data.length; i++) {
-                var dataItem = data[i];
-                var fromCoord = geoCoordMap[dataItem[0].name];
-                var toCoord = geoCoordMap[dataItem[1].name];
-                if (fromCoord && toCoord) {
-                    res.push({
-                        fromName: dataItem[0].name,
-                        toName: dataItem[1].name,
-                        coords: [fromCoord, toCoord]
-                    });
-                }
-            }
-            return res;
-        };
-        //var data_to_draw = {fromName: iata_to_airline[airport1_], iata}
-        var ob = convertData(UA_Route);
-        // for(key in ob){
-        //     document.write(ob.fromName);
-        // }
-        //document.write(convertData(UA_Route))
-
-        var color = ['#a6c84c', '#ffa022', '#46bee9', '#a6c84c', '#ffa022', '#46bee9', '#a6c84c', '#ffa022', '#46bee9', '#ffa022', '#46bee9', '#a6c84c', '#ffa022', '#46bee9'];
-        var series = [];
-        [['Your Selected Route', UA_Route]].forEach(function (item, i) {
-            series.push({
-                    name: item[0] + ' Major Routes',
-                    type: 'lines',
-                    zlevel: 1,
-                    effect: {
-                        show: true,
-                        period: 6,
-                        trailLength: 0.7,
-                        color: '#fff',
-                        symbolSize: 3
-                    },
-                    lineStyle: {
-                        normal: {
-                            color: color[i],
-                            width: 0,
-                            curveness: 0.2
-                        }
-                    },
-                    data: convertData(item[1])
-                },
-                {
-                    name: item[0],
-                    type: 'lines',
-                    zlevel: 2,
-                    symbol: ['none', 'arrow'],
-                    symbolSize: 10,
-                    effect: {
-                        show: true,
-                        period: 6,
-                        trailLength: 0,
-                        symbol: planePath,
-                        symbolSize: 15
-                    },
-                    lineStyle: {
-                        normal: {
-                            color: color[i],
-                            width: 1,
-                            opacity: 0.6,
-                            curveness: 0.2
-                        }
-                    },
-                    data: convertData(item[1])
-                },
-                {
-                    name: item[0] + ' Major Routes',
-                    type: 'effectScatter',
-                    coordinateSystem: 'geo',
-                    zlevel: 2,
-                    rippleEffect: {
-                        brushType: 'stroke'
-                    },
-                    label: {
-                        normal: {
-                            show: true,
-                            position: 'right',
-                            formatter: '{b}'
-                        }
-                    },
-                    symbolSize: function (val) {
-                        return val[2] / 8;
-                    },
-                    itemStyle: {
-                        normal: {
-                            color: color[i]
-                        }
-                    },
-                    data: item[1].map(function (dataItem) {
-                        return {
-                            name: dataItem[0].name,
-                            value: geoCoordMap[dataItem[0].name].concat([dataItem[0].value])
-                        };
-                    })
-                },
-                {
-                    name: item[0] + ' Major Routes',
-                    type: 'effectScatter',
-                    coordinateSystem: 'geo',
-                    zlevel: 2,
-                    rippleEffect: {
-                        brushType: 'stroke'
-                    },
-                    label: {
-                        normal: {
-                            show: true,
-                            position: 'right',
-                            formatter: '{b}'
-                        }
-                    },
-                    symbolSize: function (val) {
-                        return val[2] / 8;
-                    },
-                    itemStyle: {
-                        normal: {
-                            color: color[i]
-                        }
-                    },
-                    data: item[1].map(function (dataItem) {
-                        return {
-                            name: dataItem[1].name,
-                            value: geoCoordMap[dataItem[1].name].concat([dataItem[1].value])
-                        };
-                    })
-                }
-            );
+    $('document').ready(function () {
+        var airport1_ = getQueryVariable("airport0");
+        var airport2_ = getQueryVariable("airport1");
+        var airport3_ = getQueryVariable("airport2");
+        alert(airport3_)
+        $('#title1').text("Connection Result From " + airport1_ + " to " + airport3_);
+        $('#title2').text("---------<br>Connection 1: From " + airport1_ +" to "+ airport2_ + " <br>----------");
+        $('#title3').text("---------<br>Connection 1: From " + airport2_ +" to "+ airport3_ + " <br>----------");
+        $("#flightNumberSubmit1").click(function () {
+            window.location.href= '../visual/flight_chart.html?dep='+ airport1_+'&des='+airport2_;
+        });
+        $("#flightNumberSubmit2").click(function () {
+            window.location.href= '../visual/flight_chart.html?dep='+ airport2_+'&des='+airport3_;
         });
 
-        option = {
-            backgroundColor: '#404a59',
-            title: {
-                text: 'Flight On Time Visualization System: From ' + airport1_ + " To " + airport2_,
-                subtext: 'For routes connectiong the biggest 300 US cities',
-                left: 'center',
-                textStyle: {
-                    color: '#fff',
-                    fontSize: 20
-
-                }
-            },
-
-
-            legend: {
-                orient: 'vertical',
-                top: 'top',
-                left: 'left',
-                data: ['Your Selected Route'],
-
-                textStyle: {
-                    color: '#fff'
-                },
-                selectedMode: 'single'
-            },
-            series: series,
-            geo: {
-                map: 'world',
-                center: [-94.5785667, 39.0997265],
-                zoom: 5,
-                label: {
-                    emphasis: {
-                        show: false
-                    }
-                },
-                roam: true,
-                silent: true,
-                itemStyle: {
-                    normal: {
-                        areaColor: '#323c48',
-                        borderColor: '#404a59'
-                    },
-                    emphasis: {
-                        areaColor: '#323c48',
-                        borderColor: '#404a59'
-                    }
-                }
-            }
+        var iata_to_airline = {
+            "UA": "United Airlines", "AA": "American Airlines",
+            "US": "US Airways", "F9": "Frontier Airlines",
+            "B6": "Jetblue Airways", "OO": "Skywest Airlines",
+            "AS": "Alaska Airlines", "NK": "Spirit Airlines",
+            "WN": "Southwest Airlines", "DL": "Delta Airlines",
+            "EV": "Atlantic Southeast Airlines", "HA": "Hawaiian Airlines",
+            "MQ": "American Eagle Airlines", "VX": "Virgin America"
         };
-        if (option && typeof option === "object") {
-            myChart.setOption(option, true);
-        }
-    }
 
-    chart0(airport1_, airport2_);
+        function getQueryVariable(variable)
+        {
+            var query = window.location.search.substring(1);
+            var vars = query.split("&");
+            for (var i=0;i<vars.length;i++) {
+                var pair = vars[i].split("=");
+                if(pair[0] == variable){return pair[1];}
+            }
+            return(false);
+        }
+
+        function chart0(airport1_, airport2_) {
+
+            var dom = document.getElementById("container0");
+            var myChart = echarts.init(dom);
+            var app = {};
+            option = null;
+            var geoCoordMap = {
+
+                'Allentown': [-75.4404, 40.652359999999994],
+                'Abilene': [-99.6819, 32.41132],
+                'Albuquerque': [-106.60918999999998, 35.04022],
+                'Aberdeen': [-98.42183, 45.449059999999996],
+                'Albany': [-84.19447, 31.53552],
+                'Nantucket': [-70.06018, 41.25305],
+                'Waco': [-97.23052, 31.611290000000004],
+                'Arcata/Eureka': [-124.10862, 40.978120000000004],
+                'Atlantic City': [-74.57717, 39.45758],
+                'Adak': [-176.64603, 51.877959999999995],
+                'Kodiak': [-152.49386, 57.74997],
+                'Alexandria': [-92.54856, 31.327370000000002],
+                'Augusta': [-81.9645, 33.36996],
+                'King Salmon': [-156.64921999999999, 58.6768],
+                'Albany': [-73.80298, 42.74812],
+                'Waterloo': [-92.40034, 42.55708],
+                'Amarillo': [-101.70593000000001, 35.21937],
+                'Anchorage': [-149.99618999999998, 61.174319999999994],
+                'Alpena': [-83.56029000000001, 45.078070000000004],
+                'Aspen': [-106.86885, 39.22316],
+                'Atlanta': [-84.42694, 33.640440000000005],
+                'Appleton': [-88.51948, 44.25741],
+                'Austin': [-97.66986999999999, 30.19453],
+                'Asheville': [-82.54181, 35.43619],
+                'Wilkes-Barre/Scranton': [-75.72426999999999, 41.33815],
+                'Kalamazoo': [-85.55206, 42.23488],
+                'Windsor Locks': [-72.68323000000001, 41.93887],
+                'Bethel': [-161.838, 60.77978],
+                'Bakersfield': [-119.05677, 35.4336],
+                'Binghamton': [-75.97961, 42.20848],
+                'Bangor': [-68.82814, 44.80744],
+                'Birmingham': [-86.75355, 33.562940000000005],
+                'Billings': [-108.54286, 45.80766],
+                'Bismarck': [-100.74672, 46.77411],
+                'Bemidji': [-94.93372, 47.50942],
+                'Bellingham': [-122.53753, 48.79275],
+                'Bloomington': [-88.91595, 40.477990000000005],
+                'Nashville': [-86.67818, 36.12448],
+                'Boise': [-116.22278, 43.564440000000005],
+                'Boston': [-71.00518000000001, 42.36435],
+                'Beaumont/Port Arthur': [-94.02069, 29.95083],
+                'Brunswick': [-81.46631, 31.25903],
+                'Aguadilla': [-67.12944, 18.49486],
+                'Brainerd': [-94.13723, 46.397859999999994],
+                'Brownsville': [-97.42586, 25.90683],
+                'Barrow': [-156.766, 71.28545],
+                'Butte': [-112.49746, 45.9548],
+                'Baton Rouge': [-91.14963, 30.53316],
+                'Burlington': [-73.15031, 44.473],
+                'Buffalo': [-78.73217, 42.94052],
+                'Burbank': [-118.3585, 34.20062],
+                'Baltimore': [-76.6682, 39.1754],
+                'Bozeman': [-111.15301000000001, 45.7769],
+                'Columbia': [-81.11954, 33.93884],
+                'Akron': [-81.44247, 40.916309999999996],
+                'Cedar City': [-113.09858, 37.70097],
+                'Cordova': [-145.47765, 60.49183000000001],
+                'Crescent City': [-124.23653, 41.780159999999995],
+                'Chattanooga': [-85.20379, 35.035270000000004],
+                'Charlottesville': [-78.45286, 38.13864],
+                'Charleston': [-80.04051, 32.89865],
+                'Cedar Rapids': [-91.71087, 41.88459],
+                'Sault Ste. Marie': [-84.47239, 46.25075],
+                'San Diego': [-117.27873000000001, 33.12723],
+                'Cleveland': [-81.8494, 41.41089],
+                'College Station': [-96.36381999999999, 30.588590000000003],
+                'Charlotte': [-80.94313000000001, 35.214009999999995],
+                'Columbus': [-82.89188, 39.99799],
+                'Champaign/Urbana': [-88.27806, 40.03925],
+                'Hancock': [-88.48906, 47.168420000000005],
+                'Moab': [-109.75483999999999, 38.75496],
+                'Cody': [-109.0238, 44.52019],
+                'Colorado Springs': [-104.70025, 38.80581],
+                'Columbia': [-92.21963000000001, 38.818090000000005],
+                'Casper': [-106.46446999999999, 42.908359999999995],
+                'Corpus Christi': [-97.50121999999999, 27.770359999999997],
+                'Charleston': [-81.59319, 38.37315],
+                'Columbus': [-84.93885999999999, 32.516329999999996],
+                'Covington': [-84.66216999999999, 39.04614],
+                'Mosinee': [-89.66678, 44.77762],
+                'Daytona Beach': [-81.05806, 29.179920000000003],
+                'Dallas': [-96.85177, 32.84711],
+                'Dayton': [-84.21938, 39.90238],
+                'Dubuque': [-90.70917, 42.40296],
+                'Arlington': [-77.03772, 38.85208],
+                'Denver': [-104.667, 39.85841],
+                'Dallas-Fort Worth': [-97.0372, 32.89595],
+                'Dothan': [-85.44963, 31.321340000000003],
+                'Dickinson': [-102.80195, 46.79739],
+                'Dillingham': [-158.50333999999998, 59.04541],
+                'Duluth': [-92.19365, 46.84209],
+                'Durango': [-107.75376999999999, 37.15152],
+                'Des Moines': [-93.66068, 41.534929999999996],
+                'Detroit': [-83.34884, 42.21206],
+                'Devils Lake': [-98.90878000000001, 48.11425],
+                'Eau Claire': [-91.48507, 44.86526],
+                'Eagle': [-106.9177, 39.64257],
+                'Elko': [-115.7917, 40.82493],
+                'Elmira': [-76.89144, 42.159909999999996],
+                'El Paso': [-106.37781000000001, 31.80667],
+                'Erie': [-80.17622, 42.08202],
+                'Escanaba': [-87.09373000000001, 45.72267],
+                'Eugene': [-123.21869, 44.123259999999995],
+                'Evansville': [-87.53063, 38.03799],
+                'New Bern': [-77.04294, 35.07297],
+                'Newark': [-74.16866, 40.6925],
+                'Key West': [-81.75956, 24.55611],
+                'Fairbanks': [-147.85967, 64.81368],
+                'Fargo': [-96.81499000000001, 46.91935],
+                'Fresno': [-119.71813999999999, 36.77619],
+                'Fayetteville': [-78.88, 34.99147],
+                'Kalispell': [-114.25506999999999, 48.3114],
+                'Flagstaff': [-111.67121999999999, 35.13845],
+                'Ft. Lauderdale': [-80.15275, 26.07258],
+                'Flint': [-83.74346, 42.9655],
+                'Sioux Falls': [-96.7417, 43.58135],
+                'Fort Smith': [-94.36744, 35.33659],
+                'Fort Wayne': [-85.19515, 40.97847],
+                'Gillette': [-105.53936000000002, 44.3489],
+                'Garden City': [-100.72440999999999, 37.92752],
+                'Spokane': [-117.53383999999998, 47.619859999999996],
+                'Grand Forks': [-97.17611, 47.949259999999995],
+                'Longview': [-94.71171, 32.384859999999996],
+                'Grand Junction': [-108.52673, 39.122409999999995],
+                'Gainesville': [-82.27178, 29.69006],
+                'Gulfport-Biloxi': [-89.07009000000001, 30.40728],
+                'Green Bay': [-88.12959000000001, 44.48507],
+                'Grand Island': [-98.30861, 40.96747],
+                'Killeen': [-97.8278, 31.0649],
+                'Grand Rapids': [-85.52277, 42.88082],
+                'Greensboro': [-79.9373, 36.09775],
+                'Greer': [-82.21885999999999, 34.89567],
+                'Gustavus': [-135.70738, 58.424380000000006],
+                'Great Falls': [-111.37069, 47.482],
+                'Columbus-Starkville-West Point': [-88.59137, 33.45033],
+                'Gunnison': [-106.93318000000001, 38.53396],
+                'Agana': [-144.79598000000001, 13.48345],
+                'Hayden': [-107.21766000000001, 40.48118],
+                'Hibbing': [-92.83899, 47.3866],
+                'Helena': [-111.98275, 46.60682],
+                'Honolulu': [-157.92241, 21.31869],
+                'Hobbs': [-103.21703000000001, 32.687529999999995],
+                'Houston': [-95.27889, 29.64542],
+                'White Plains': [-73.70756999999999, 41.066959999999995],
+                'Harlingen': [-97.65439, 26.228509999999996],
+                'Huntsville': [-86.77311, 34.64045],
+                'Hyannis': [-70.28036, 41.669340000000005],
+                'Hays': [-99.27403000000001, 38.84494],
+                'Chantilly': [-77.45581, 38.94453],
+                'Niagara Falls': [-78.94538, 43.10726],
+                'Houston': [-95.33972, 29.98047],
+                'Wichita': [-97.43305, 37.64996],
+                'Idaho Falls': [-112.07016999999999, 43.514559999999996],
+                'Wilmington': [-75.60653, 39.67872],
+                'Wilmington': [-77.90256, 34.27061],
+                'Iron Mountain/Kingsford': [-88.11454, 45.81835],
+                'Indianapolis': [-86.29438, 39.71733],
+                'International Falls': [-93.40307, 48.56619],
+                'Williston': [-103.64235, 48.17794],
+                'Islip': [-73.10021, 40.79524],
+                'Ithaca': [-76.45844, 42.49103],
+                'Hilo': [-155.04847, 19.72026],
+                'Jackson': [-110.73773999999999, 43.60732],
+                'Jackson': [-90.07589, 32.311170000000004],
+                'Jacksonville': [-81.68786, 30.494059999999998],
+                'New York': [-73.77893, 40.63975],
+                'Joplin': [-94.49826999999999, 37.15181],
+                'Jamestown': [-98.6782, 46.92972],
+                'Juneau': [-134.57628, 58.35496],
+                'Kailua/Kona': [-156.04563000000002, 19.738770000000002],
+                'Ketchikan': [-131.71374, 55.35556999999999],
+                'Lansing': [-84.58736, 42.7787],
+                'Laramie': [-105.67499, 41.31205],
+                'Las Vegas': [-115.15233, 36.08036],
+                'Lawton': [-98.41664, 34.56771],
+                'Los Angeles': [-118.40807, 33.94254],
+                'Lubbock': [-101.82278000000001, 33.66364],
+                'Latrobe': [-79.4048, 40.275940000000006],
+                'Lake Charles': [-93.2234, 30.1261],
+                'Lexington': [-84.60539, 38.036970000000004],
+                'Lafayette': [-91.98765999999999, 30.20528],
+                'New York': [-73.87261, 40.77724],
+                'Long Beach': [-118.15161, 33.81772],
+                'Lihue': [-159.33896000000001, 21.97598],
+                'Little Rock': [-92.22425, 34.7294],
+                'Lincoln': [-96.75925, 40.850970000000004],
+                'Laredo': [-99.46154, 27.543740000000003],
+                'La Crosse': [-91.25654, 43.87938],
+                'Lewiston': [-117.01539, 46.3745],
+                'Midland': [-102.20191, 31.942529999999998],
+                'Saginaw': [-84.07965, 43.53291],
+                'Kansas City': [-94.71391, 39.29761],
+                'Orlando': [-81.31603, 28.428890000000003],
+                'Harrisburg': [-76.7634, 40.1935],
+                'Chicago': [-87.75242, 41.78598],
+                'Meridian': [-88.75121, 32.33313],
+                'Memphis': [-89.97667, 35.04242],
+                'McAllen': [-98.23861, 26.175829999999998],
+                'Medford': [-122.8735, 42.37423],
+                'Montgomery': [-86.39398, 32.30064],
+                'Manhattan': [-96.67083000000001, 39.14097],
+                'Manchester': [-71.43706, 42.93452],
+                'Miami': [-80.29056, 25.79325],
+                'Milwaukee': [-87.89658, 42.94722],
+                'Muskegon': [-86.23822, 43.16949],
+                'Melbourne': [-80.64581, 28.10275],
+                'Moline': [-90.50754, 41.44853],
+                'Monroe': [-92.03769, 32.510870000000004],
+                'Mammoth Lakes': [-118.83776999999999, 37.62405],
+                'Mobile': [-88.24283, 30.69142],
+                'Minot': [-101.28033, 48.25938],
+                'Marquette': [-87.39536, 46.353640000000006],
+                'Monterey': [-121.84295, 36.58698],
+                'Madison': [-89.33751, 43.13986],
+                'Missoula': [-114.09056000000001, 46.916309999999996],
+                'Minneapolis': [-93.21692, 44.88055],
+                'New Orleans': [-90.25803, 29.99339],
+                'Montrose': [-107.89383000000001, 38.50887],
+                'Marthas Vineyard': [-70.61433000000001, 41.393029999999996],
+                'Myrtle Beach': [-78.92833, 33.67975],
+                'Jacksonville': [-77.61214, 34.829159999999995],
+                'Oakland': [-122.22072, 37.72129],
+                'Kahului': [-156.43046, 20.89865],
+                'Oklahoma City': [-97.60073, 35.39309],
+                'Omaha': [-95.89416999999999, 41.30252],
+                'Nome': [-165.44525, 64.5122],
+                'Ontario': [-117.60118999999999, 34.056],
+                'Chicago': [-87.90446, 41.9796],
+                'Norfolk': [-76.20121999999999, 36.89461],
+                'Worcester': [-71.87571, 42.267340000000004],
+                'North Bend': [-124.24603, 43.41714],
+                'Kotzebue': [-162.59855, 66.88468],
+                'Paducah': [-88.77375, 37.060829999999996],
+                'West Palm Beach': [-80.09559, 26.683159999999997],
+                'Portland': [-122.5975, 45.58872],
+                'Newport News': [-76.49299, 37.1319],
+                'Philadelphia': [-75.24114, 39.87195],
+                'Phoenix': [-112.00806000000001, 33.43417],
+                'Peoria': [-89.69331, 40.66424],
+                'Hattiesburg-Laurel': [-89.33706, 31.46715],
+                'Pocatello': [-112.59586000000002, 42.91131],
+                'Pittsburgh': [-80.23286999999999, 40.49147],
+                'Pellston': [-84.79672, 45.57093],
+                'Pensacola': [-87.18744000000001, 30.473309999999998],
+                'Pago Pago': [-170.71053, 14.33102],
+                'Pasco': [-119.11903000000001, 46.26468],
+                'Ponce': [-66.56300999999999, 18.0083],
+                'Petersburg': [-132.94528, 56.80165],
+                'Palm Springs': [-116.50625, 33.82922],
+                'Pueblo': [-104.49656999999999, 38.28909],
+                'Providence': [-71.42822, 41.724],
+                'Portland': [-70.30875, 43.64617],
+                'Rapid City': [-103.05736999999999, 44.045320000000004],
+                'Redding': [-122.2934, 40.50898],
+                'Redmond': [-121.14996000000001, 44.25407],
+                'Raleigh': [-78.78747, 35.87764],
+                'Rhinelander': [-89.46745, 45.631190000000004],
+                'Richmond': [-77.31967, 37.50517],
+                'Rock Springs': [-109.06518999999999, 41.59422],
+                'Reno': [-119.76806, 39.49858],
+                'Roanoke': [-79.97543, 37.32547],
+                'Rochester': [-77.67238, 43.11887],
+                'Roswell': [-104.53056, 33.301559999999995],
+                'Rochester': [-92.49799, 43.90883],
+                'Ft. Myers': [-81.75516999999999, 26.536170000000002],
+                'Santa Fe': [-106.08814, 35.61678],
+                'San Diego': [-117.18966, 32.73356],
+                'San Antonio': [-98.46978, 29.533690000000004],
+                'Savannah': [-81.20214, 32.12758],
+                'Santa Barbara': [-119.84037, 34.42621],
+                'South Bend': [-86.31846999999999, 41.70895],
+                'San Luis Obispo': [-120.64238999999999, 35.23706],
+                'Deadhorse': [-148.46516, 70.19476],
+                'State College': [-77.8463, 40.851209999999995],
+                'Louisville': [-85.736, 38.17439],
+                'Seattle': [-122.30931000000001, 47.44898],
+                'San Francisco': [-122.37483999999999, 37.619],
+                'Springfield': [-93.38686, 37.24433],
+                'St George': [-113.59306000000001, 37.090579999999996],
+                'Shreveport': [-93.8256, 32.44663],
+                'Sitka': [-135.3616, 57.04714],
+                'San Jose': [-121.92901, 37.36186],
+                'San Angelo': [-100.49631, 31.35775],
+                'San Juan': [-66.00183, 18.439420000000002],
+                'Salt Lake City': [-111.97776999999999, 40.78839],
+                'Sacramento': [-121.59076999999999, 38.69542],
+                'Santa Maria': [-120.45758000000001, 34.89925],
+                'Santa Ana': [-117.86822, 33.67566],
+                'Springfield': [-89.67761999999999, 39.84395],
+                'Wichita Falls': [-98.49189, 33.9888],
+                'Sarasota': [-82.55411, 27.395329999999998],
+                'St Cloud': [-94.05834, 45.545320000000004],
+                'St Louis': [-90.35999, 38.747690000000006],
+                'Charlotte Amalie': [-64.97336, 18.337310000000002],
+                'Christiansted': [-64.79856, 17.70189],
+                'Hailey': [-114.29659, 43.50484],
+                'Sioux City': [-96.38436999999999, 42.4026],
+                'Newburgh': [-74.10484, 41.504090000000005],
+                'Syracuse': [-76.10631, 43.11119],
+                'Tallahassee': [-84.35033, 30.39653],
+                'Toledo': [-83.80783000000001, 41.58681],
+                'Tampa': [-82.53325, 27.97547],
+                'Bristol': [-82.40742, 36.47521],
+                'Trenton': [-74.81347, 40.27669],
+                'Tulsa': [-95.88824, 36.198370000000004],
+                'Tucson': [-110.94103, 32.11608],
+                'Traverse City': [-85.58224, 44.741440000000004],
+                'Twin Falls': [-114.48773999999999, 42.4818],
+                'Texarkana': [-93.99101999999999, 33.45371],
+                'Tyler': [-95.40239, 32.35414],
+                'Knoxville': [-83.99286, 35.812490000000004],
+                'Vernal': [-109.50992, 40.4409],
+                'Valdosta': [-83.27672, 30.7825],
+                'Valparaiso': [-86.5254, 30.48325],
+                'Wrangell': [-132.36982, 56.48433000000001],
+                'West Yellowstone': [-111.11764, 44.6884],
+                'Fayetteville/Springdale/Rogers': [-94.30681, 36.28187],
+                'Yakutat': [-139.66023, 59.50336],
+                'Yuma': [-114.60597, 32.65658]
+            };
+            var message = "fail";
+
+            function ajaxRePost() {
+                var options = {
+                    type: "GET",
+                    url: "../php/GetAirline.php",
+                    data: {},
+                    async: false,
+                    success: function (msg) {
+                        message = msg;
+                    },
+                    fail: function () {
+                        alert(message);
+                    }
+                };
+                $.ajax(options);
+                return message;
+            }
+
+            var n = JSON.parse(ajaxRePost());
+            var iata_code = new Array();
+            var airlines = new Array();
+            for (var i in n) {
+                iata_code[i] = n[i].iata_code;
+                airlines[i] = n[i].airline;
+            }
+
+            function getroutes(arg1, arg2) {
+                var options = {
+                    type: "GET",
+                    url: "../php/Get_cities.php",
+                    data: {iata1: arg1, iata2: arg2},
+                    async: false,
+                    success: function (msg) {
+                        message = msg;
+                        //alert(message);
+                    },
+                    fail: function () {
+                        alert(message);
+                    }
+                };
+                $.ajax(options);
+
+                return message;
+            }
+
+            function transfrom_array(arr) {
+                arr.push([{name: routes[0].city}, {name: routes[1].city, value: 95}]);
+            }
+
+            var routes = JSON.parse(getroutes(airport1_, airport2_));
+            var UA_Route = new Array();
+            transfrom_array(UA_Route);
+            routes  = JSON.parse(getroutes(airport2_, airport3_));
+            transfrom_array(UA_Route);
+
+
+            var planePath = 'path://M1705.06,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705.06,1318.313z';
+
+            var convertData = function (data) {
+                var res = [];
+                for (var i = 0; i < data.length; i++) {
+                    var dataItem = data[i];
+                    var fromCoord = geoCoordMap[dataItem[0].name];
+                    var toCoord = geoCoordMap[dataItem[1].name];
+                    if (fromCoord && toCoord) {
+                        res.push({
+                            fromName: dataItem[0].name,
+                            toName: dataItem[1].name,
+                            coords: [fromCoord, toCoord]
+                        });
+                    }
+                }
+                return res;
+            };
+            //var data_to_draw = {fromName: iata_to_airline[airport1_], iata}
+            var ob = convertData(UA_Route);
+            // for(key in ob){
+            //     document.write(ob.fromName);
+            // }
+            //document.write(convertData(UA_Route))
+
+            var color = ['#a6c84c', '#ffa022', '#46bee9', '#a6c84c', '#ffa022', '#46bee9', '#a6c84c', '#ffa022', '#46bee9', '#ffa022', '#46bee9', '#a6c84c', '#ffa022', '#46bee9'];
+            var series = [];
+            [['Your Selected Route', UA_Route]].forEach(function (item, i) {
+                series.push({
+                        name: item[0] + ' Major Routes',
+                        type: 'lines',
+                        zlevel: 1,
+                        effect: {
+                            show: true,
+                            period: 6,
+                            trailLength: 0.7,
+                            color: '#fff',
+                            symbolSize: 3
+                        },
+                        lineStyle: {
+                            normal: {
+                                color: color[i],
+                                width: 0,
+                                curveness: 0.2
+                            }
+                        },
+                        data: convertData(item[1])
+                    },
+                    {
+                        name: item[0],
+                        type: 'lines',
+                        zlevel: 2,
+                        symbol: ['none', 'arrow'],
+                        symbolSize: 10,
+                        effect: {
+                            show: true,
+                            period: 6,
+                            trailLength: 0,
+                            symbol: planePath,
+                            symbolSize: 15
+                        },
+                        lineStyle: {
+                            normal: {
+                                color: color[i],
+                                width: 1,
+                                opacity: 0.6,
+                                curveness: 0.2
+                            }
+                        },
+                        data: convertData(item[1])
+                    },
+                    {
+                        name: item[0] + ' Major Routes',
+                        type: 'effectScatter',
+                        coordinateSystem: 'geo',
+                        zlevel: 2,
+                        rippleEffect: {
+                            brushType: 'stroke'
+                        },
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'right',
+                                formatter: '{b}'
+                            }
+                        },
+                        symbolSize: function (val) {
+                            return val[2] / 8;
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: color[i]
+                            }
+                        },
+                        data: item[1].map(function (dataItem) {
+                            return {
+                                name: dataItem[0].name,
+                                value: geoCoordMap[dataItem[0].name].concat([dataItem[0].value])
+                            };
+                        })
+                    },
+                    {
+                        name: item[0] + ' Major Routes',
+                        type: 'effectScatter',
+                        coordinateSystem: 'geo',
+                        zlevel: 2,
+                        rippleEffect: {
+                            brushType: 'stroke'
+                        },
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'right',
+                                formatter: '{b}'
+                            }
+                        },
+                        symbolSize: function (val) {
+                            return val[2] / 8;
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: color[i]
+                            }
+                        },
+                        data: item[1].map(function (dataItem) {
+                            return {
+                                name: dataItem[1].name,
+                                value: geoCoordMap[dataItem[1].name].concat([dataItem[1].value])
+                            };
+                        })
+                    }
+                );
+            });
+
+            option = {
+                backgroundColor: '#404a59',
+                title: {
+                    text: 'Flight On Time Visualization System: From ' + airport1_ + " To " + airport2_,
+                    subtext: 'For routes connectiong the biggest 300 US cities',
+                    left: 'center',
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: 20
+
+                    }
+                },
+
+
+                legend: {
+                    orient: 'vertical',
+                    top: 'top',
+                    left: 'left',
+                    data: ['Your Selected Route'],
+
+                    textStyle: {
+                        color: '#fff'
+                    },
+                    selectedMode: 'single'
+                },
+                series: series,
+                geo: {
+                    map: 'world',
+                    center: [-94.5785667, 39.0997265],
+                    zoom: 5,
+                    label: {
+                        emphasis: {
+                            show: false
+                        }
+                    },
+                    roam: true,
+                    silent: true,
+                    itemStyle: {
+                        normal: {
+                            areaColor: '#323c48',
+                            borderColor: '#404a59'
+                        },
+                        emphasis: {
+                            areaColor: '#323c48',
+                            borderColor: '#404a59'
+                        }
+                    }
+                }
+            };
+            if (option && typeof option === "object") {
+                myChart.setOption(option, true);
+            }
+        }
+
+        chart0(airport1_, airport2_);
+    });
+
 
 </script>
 
