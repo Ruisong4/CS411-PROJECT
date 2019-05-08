@@ -61,13 +61,13 @@ EOT;
                 Visualize It!
             </div>
         </div>
-        <div div class="inputBlock" >
-                    <form action='shortest_path.php' method='POST'>
+        <div style="width: 100%" class="inputBlock" >
+            <form style="text-align: center" action='shortest_path.php' method='POST'>
                 <input type='hidden' name='airport' value={$ori}>
                 <input type='hidden' name='airport1' value={$des}>    
-                <div class="inputBlock" style="text-align:center">
-                    <input type="Submit" value = "Find another plan" align = center name = "routeSubmit"  class="searchSubmit" />
-                </div>
+                
+                <input type="Submit" value = "Find another plan" align = center name = "routeSubmit"  class="searchSubmit" />
+                
             </form>
         </div>
         <div class="inputBlock" onclick="window.location.href= 'http://sp19-cs411-35.cs.illinois.edu';return false"  align="center" style="width: 100%">
@@ -108,6 +108,7 @@ EOT;
         </script> <!-- loading jquery lib -->
         <script src="../javascript/jquery.auto-complete.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script src="../javascript/cookieTool.js"></script>
         <script src="../javascript/header.js"></script>
         <script src="../javascript/mainPage.js"></script>
     </head>

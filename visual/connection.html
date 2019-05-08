@@ -29,9 +29,6 @@
     </div>
 </div>
 <body style="height: 45%; margin: 0">
-<div id="mainContainer">
-    <img src="../resources/img/main_background.jpg" id="mainBack">
-</div>
 <div id="container0" style="background-color:rgba(255, 255, 255, 0.7); top: 4pc;height: 60%; width: 100%; left:20%">
     Delay Situation in 30 Days
 </div>
@@ -829,7 +826,17 @@
     function a3(){
         return airport3_;
     }
-
+    window.onload = function () {
+        document.getElementsByClassName("title")[0].innerHTML = "Connection Result From " + a1() + " to " + a3();
+        document.getElementsByClassName("title")[0].innerHTML = "---------<br>Connection 1: From " + a1() +" to "+ a2() + " <br>----------";
+        document.getElementsByClassName("title")[0].innerHTML = "---------<br>Connection 1: From " + a2() +" to "+ a3() + " <br>----------";
+        document.getElementById("visual1").onclick = function () {
+            window.location.href= '../visual/flight_chart.html?dep='+ a1()+'&des='+a2();
+        }
+        document.getElementById("visual1").onclick = function () {
+            window.location.href= '../visual/flight_chart.html?dep='+ a2()+'&des='+a3();
+        }
+    }
 
 </script>
 
@@ -859,21 +866,21 @@
     <img src="../resources/img/main_background.jpg" id="mainBack">
 
     <br><br><br>
-    <h1 style= "font-size: 50px;font-family: Staatliches;text-align:center;text-shadow:3PX 3PX 3PX #FFFFFF">Connection Result From BIL to HNL</h1>
+    <h1 class="title" style= "font-size: 50px;font-family: Staatliches;text-align:center;text-shadow:3PX 3PX 3PX #FFFFFF">Connection Result From BIL to HNL</h1>
     <br><br>
 
     <br><br><br>
-    <h2 style= "font-size: 50px;font-family: Staatliches;text-align:center;text-shadow:3PX 3PX 3PX #FFFFFF">---------<br>Connection 1: From BIL to SLC<br>----------</h2>
+    <h2 class="title"  style= "font-size: 50px;font-family: Staatliches;text-align:center;text-shadow:3PX 3PX 3PX #FFFFFF">---------<br>Connection 1: From BIL to SLC<br>----------</h2>
 
-    <div class="inputBlock" onclick="window.location.href= '../visual/flight_chart.html?dep=BIL&des=SLC';return false"  align="center" style="width: 100%">
+    <div id="visual1" class="inputBlock" align="center" style="width: 100%">
         <div id="flightNumberSubmit1" class="searchSubmit">
             Visualize It!
         </div>
         <br><br><br><br><br><br>
     </div>
-    <h2 style= "font-size: 50px;font-family: Staatliches;text-align:center;text-shadow:3PX 3PX 3PX #FFFFFF">---------<br>Connection 2: From SLC to HNL<br>----------</h2>
+    <h2 class="title"  style= "font-size: 50px;font-family: Staatliches;text-align:center;text-shadow:3PX 3PX 3PX #FFFFFF">---------<br>Connection 2: From SLC to HNL<br>----------</h2>
 
-    <div class="inputBlock" onclick="window.location.href= '../visual/flight_chart.html?dep=SLC&des=HNL';return false"  align="center" style="width: 100%">
+    <div id="visual2" class="inputBlock" align="center" style="width: 100%">
         <div id="flightNumberSubmit2" class="searchSubmit">
             Visualize It!
         </div>
