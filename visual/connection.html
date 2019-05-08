@@ -47,9 +47,9 @@
     var airport1_ = getQueryVariable("airport0");
     var airport2_ = getQueryVariable("airport1");
     var airport3_ = getQueryVariable("airport2");
-    document.getElementsByClassName("title")[0].innerHTML = "Connection Result From " + airport1_ + " to " + airport3_;
-    document.getElementsByClassName("title")[0].innerHTML = "---------<br>Connection 1: From " + airport1_ +" to "+ airport2_ + " <br>----------";
-    document.getElementsByClassName("title")[0].innerHTML = "---------<br>Connection 1: From " + airport2_ +" to "+ airport3_ + " <br>----------";
+    $('#title1').text("Connection Result From " + airport1_ + " to " + airport3_);
+    $('#title2').text("---------<br>Connection 1: From " + airport1_ +" to "+ airport2_ + " <br>----------");
+    $('#title3').text("---------<br>Connection 1: From " + airport2_ +" to "+ airport3_ + " <br>----------");
     $("#flightNumberSubmit1").click(function () {
         window.location.href= '../visual/flight_chart.html?dep='+ airport1_+'&des='+airport2_;
     });
@@ -867,11 +867,11 @@
     <img src="../resources/img/main_background.jpg" id="mainBack">
 
     <br><br><br>
-    <h1 class="title" style= "font-size: 50px;font-family: Staatliches;text-align:center;text-shadow:3PX 3PX 3PX #FFFFFF">Connection Result From BIL to HNL</h1>
+    <h1 id="title1" style= "font-size: 50px;font-family: Staatliches;text-align:center;text-shadow:3PX 3PX 3PX #FFFFFF">Connection Result From BIL to HNL</h1>
     <br><br>
 
     <br><br><br>
-    <h2 class="title"  style= "font-size: 50px;font-family: Staatliches;text-align:center;text-shadow:3PX 3PX 3PX #FFFFFF">---------<br>Connection 1: From BIL to SLC<br>----------</h2>
+    <h2 id="title2"  style= "font-size: 50px;font-family: Staatliches;text-align:center;text-shadow:3PX 3PX 3PX #FFFFFF">---------<br>Connection 1: From BIL to SLC<br>----------</h2>
 
     <div id="visual1" class="inputBlock" align="center" style="width: 100%">
         <div id="flightNumberSubmit1" class="searchSubmit">
@@ -879,7 +879,7 @@
         </div>
         <br><br><br><br><br><br>
     </div>
-    <h2 class="title"  style= "font-size: 50px;font-family: Staatliches;text-align:center;text-shadow:3PX 3PX 3PX #FFFFFF">---------<br>Connection 2: From SLC to HNL<br>----------</h2>
+    <h2 id="title3"  style= "font-size: 50px;font-family: Staatliches;text-align:center;text-shadow:3PX 3PX 3PX #FFFFFF">---------<br>Connection 2: From SLC to HNL<br>----------</h2>
 
     <div id="visual2" class="inputBlock" align="center" style="width: 100%">
         <div id="flightNumberSubmit2" class="searchSubmit">
